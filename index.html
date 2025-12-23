@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -13,7 +12,6 @@
             box-sizing: border-box;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 12px;
             height: 12px;
@@ -38,7 +36,6 @@
             background: transparent;
         }
 
-        /* Scrollbar cho Firefox */
         * {
             scrollbar-width: thin;
             scrollbar-color: #c41e3a rgba(255, 255, 255, 0.1);
@@ -56,22 +53,214 @@
             position: relative;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Snowflakes animation */
-        .snowflake {
+        /* ===== CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
+        .snowflake-explosion-effect {
             position: absolute;
-            background: white;
-            border-radius: 50%;
             pointer-events: none;
-            opacity: 0.8;
+            z-index: 10;
+            transform-origin: center;
+            filter: drop-shadow(0 0 2px rgba(30, 144, 255, 0.6));
+            will-change: transform, opacity;
+        }
+
+        .snowflake-explosion-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: rotate 6s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .snowflake-explosion-branch {
+            position: absolute;
+            background: linear-gradient(to right, #4682B4, #1E90FF, #4682B4);
+            border-radius: 0.5px;
+            box-shadow: 0 0 2px rgba(30, 144, 255, 0.7);
+            will-change: transform;
+        }
+
+        .explosion-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 20;
+            will-change: transform;
+        }
+
+        .explosion-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1E90FF, #87CEEB, #FFFFFF);
+            box-shadow: 0 0 3px rgba(30, 144, 255, 0.6);
+            will-change: transform, opacity;
+        }
+
+        .falling-particle-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 15;
+            border-radius: 50%;
+            background: linear-gradient(180deg, rgba(30, 144, 255, 0.9), rgba(255, 255, 255, 0.7));
+            box-shadow: 0 0 4px rgba(30, 144, 255, 0.5);
+            will-change: transform, opacity;
+        }
+
+        @keyframes snowflakeAppear {
+            0% { 
+                opacity: 0;
+                transform: scale(0.15);
+            }
+            40% { 
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% { 
+                transform: scale(0.98);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes snowflakeDisappear {
+            0% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(0.6);
+            }
+        }
+
+        @keyframes particleExplode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        @keyframes particleFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(var(--fall-distance)) rotate(var(--rotate-angle));
+            }
+        }
+
+        .snowflake-explosion-effect, .explosion-effect, .explosion-particle, .falling-particle-effect {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .mute-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a9d8f, #2a623d);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .mute-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .mute-toggle.muted {
+            background: linear-gradient(135deg, #e63946, #c41e3a);
+        }
+
+        .mute-toggle.muted i {
+            text-decoration: line-through;
+        }
+
+        .sound-status {
+            position: fixed;
+            top: 75px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .mute-toggle:hover + .sound-status,
+        .sound-status:hover {
+            opacity: 1;
+        }
+
+        .click-effect {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(30, 144, 255, 0.8);
+            pointer-events: none;
+            z-index: 10000;
+            animation: ripple 0.6s linear;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes ripple {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 0.8;
+            }
+            100% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+            }
+        }
+
+        /* Hiệu ứng icon Noel rơi tự do */
+        .falling-icon {
+            position: absolute;
+            pointer-events: none;
             z-index: 1;
+            font-size: 24px;
             animation: fall linear infinite;
+            opacity: 0.7;
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(100vh);
+            0% {
+                transform: translateY(-50px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
             }
         }
 
@@ -207,7 +396,7 @@
         }
 
         button:before {
-            content: ❄️";
+            content: "❄️";
             position: absolute;
             left: 10px;
             opacity: 0.3;
@@ -216,6 +405,10 @@
         button:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(196, 30, 58, 0.3);
+        }
+
+        button:active {
+            transform: translateY(-1px);
         }
 
         .response-btn {
@@ -463,7 +656,6 @@
             transform: rotate(90deg);
         }
 
-        /* Tabs cho các loại nền */
         .background-tabs {
             display: flex;
             gap: 5px;
@@ -494,7 +686,6 @@
             transform: scale(1.05);
         }
 
-        /* Các section nền */
         .background-section {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -545,7 +736,6 @@
             text-align: center;
         }
 
-        /* Color picker */
         .color-picker-container {
             margin: 15px 0;
         }
@@ -568,7 +758,6 @@
             background: transparent;
         }
 
-        /* Gradient creator */
         .gradient-creator {
             margin: 15px 0;
         }
@@ -594,7 +783,6 @@
             border: 2px solid #ddd;
         }
 
-        /* Image upload */
         .image-upload-container {
             margin: 15px 0;
         }
@@ -617,7 +805,6 @@
             object-fit: cover;
         }
 
-        /* Slide Selector */
         .slide-selector {
             margin: 15px 0;
         }
@@ -825,6 +1012,19 @@
             .scroll-top-btn {
                 bottom: 70px;
             }
+            
+            .mute-toggle {
+                top: 10px;
+                left: 10px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .sound-status {
+                top: 60px;
+                left: 10px;
+            }
         }
 
         /* Christmas decorations */
@@ -893,22 +1093,28 @@
     </style>
 </head>
 <body>
-    <!-- Snowflakes -->
-    <div id="snowflakes"></div>
+    <!-- Nút Mute/Unmute -->
+    <button class="mute-toggle" id="muteToggle">
+        <i class="fas fa-volume-up"></i>
+    </button>
+    <div class="sound-status" id="soundStatus">Âm thanh: Bật</div>
+
+    <!-- Vùng cho icon Noel rơi tự do -->
+    <div id="falling-icons"></div>
 
     <!-- Christmas Decorations -->
     <div id="decorations"></div>
 
     <!-- Scroll buttons -->
-    <div class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">
+    <div class="scroll-top-btn" id="scrollTopBtn">
         <i class="fas fa-chevron-up"></i>
     </div>
-    <div class="scroll-bottom-btn" id="scrollBottomBtn" onclick="scrollToBottom()">
+    <div class="scroll-bottom-btn" id="scrollBottomBtn">
         <i class="fas fa-chevron-down"></i>
     </div>
 
     <!-- Customization Toggle Button -->
-    <div class="customization-toggle" onclick="toggleCustomizationPanel()">
+    <div class="customization-toggle" id="customizationToggle">
         <i class="fas fa-palette"></i>
     </div>
 
@@ -916,27 +1122,27 @@
     <div class="customization-panel" id="customizationPanel">
         <div class="customization-header">
             <h3><i class="fas fa-magic"></i> Tùy chỉnh nâng cao</h3>
-            <button class="close-panel" onclick="toggleCustomizationPanel()">
+            <button class="close-panel" id="closePanel">
                 <i class="fas fa-times"></i>
             </button>
         </div>
 
         <!-- Tabs cho các loại nền -->
         <div class="background-tabs">
-            <button class="background-tab active" onclick="switchBackgroundTab('page')">Nền trang</button>
-            <button class="background-tab" onclick="switchBackgroundTab('border')">Nền viền</button>
-            <button class="background-tab" onclick="switchBackgroundTab('box')">Nền khung</button>
-            <button class="background-tab" onclick="switchBackgroundTab('custom')">Tùy chỉnh</button>
+            <button class="background-tab active" data-tab="page">Nền trang</button>
+            <button class="background-tab" data-tab="border">Nền viền</button>
+            <button class="background-tab" data-tab="box">Nền khung</button>
+            <button class="background-tab" data-tab="custom">Tùy chỉnh</button>
         </div>
 
         <!-- Slide Selector -->
         <div class="slide-selector">
             <label><i class="fas fa-sliders-h"></i> Áp dụng cho:</label>
             <div class="slide-options">
-                <span class="slide-btn active" onclick="selectSlide('all')">Tất cả</span>
-                <span class="slide-btn" onclick="selectSlide(1)">Slide 1</span>
-                <span class="slide-btn" onclick="selectSlide(2)">Slide 2</span>
-                <span class="slide-btn" onclick="selectSlide(3)">Slide 3</span>
+                <span class="slide-btn active" data-slide="all">Tất cả</span>
+                <span class="slide-btn" data-slide="1">Slide 1</span>
+                <span class="slide-btn" data-slide="2">Slide 2</span>
+                <span class="slide-btn" data-slide="3">Slide 3</span>
             </div>
         </div>
 
@@ -944,12 +1150,12 @@
         <div class="background-section active" id="pageBackgroundSection">
             <h4><i class="fas fa-image"></i> Nền trang chính</h4>
             <div class="background-options">
-                <div class="bg-option bg-noel-1 active" data-name="Noel Xanh" onclick="changePageBackground('bg-noel-1', 'linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c)')"></div>
-                <div class="bg-option bg-noel-2" data-name="Noel Đỏ" onclick="changePageBackground('bg-noel-2', 'linear-gradient(135deg, #c41e3a, #e63946, #ff6b6b)')"></div>
-                <div class="bg-option bg-noel-3" data-name="Đêm Noel" onclick="changePageBackground('bg-noel-3', 'linear-gradient(135deg, #1e3c72, #2a5298, #4a6491)')"></div>
-                <div class="bg-option bg-noel-4" data-name="Tím Mộng Mơ" onclick="changePageBackground('bg-noel-4', 'linear-gradient(135deg, #2d1b69, #3d28a3, #6a5acd)')"></div>
-                <div class="bg-option bg-noel-5" data-name="Xanh Ngọc" onclick="changePageBackground('bg-noel-5', 'linear-gradient(135deg, #0f4c5c, #1b6b73, #2a9d8f)')"></div>
-                <div class="bg-option bg-noel-6" data-name="Tím Đam Mê" onclick="changePageBackground('bg-noel-6', 'linear-gradient(135deg, #5a189a, #7b2cbf, #9d4edd)')"></div>
+                <div class="bg-option bg-noel-1 active" data-name="Noel Xanh" data-class="bg-noel-1" data-style="linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c)"></div>
+                <div class="bg-option bg-noel-2" data-name="Noel Đỏ" data-class="bg-noel-2" data-style="linear-gradient(135deg, #c41e3a, #e63946, #ff6b6b)"></div>
+                <div class="bg-option bg-noel-3" data-name="Đêm Noel" data-class="bg-noel-3" data-style="linear-gradient(135deg, #1e3c72, #2a5298, #4a6491)"></div>
+                <div class="bg-option bg-noel-4" data-name="Tím Mộng Mơ" data-class="bg-noel-4" data-style="linear-gradient(135deg, #2d1b69, #3d28a3, #6a5acd)"></div>
+                <div class="bg-option bg-noel-5" data-name="Xanh Ngọc" data-class="bg-noel-5" data-style="linear-gradient(135deg, #0f4c5c, #1b6b73, #2a9d8f)"></div>
+                <div class="bg-option bg-noel-6" data-name="Tím Đam Mê" data-class="bg-noel-6" data-style="linear-gradient(135deg, #5a189a, #7b2cbf, #9d4edd)"></div>
             </div>
         </div>
 
@@ -957,14 +1163,14 @@
         <div class="background-section" id="borderBackgroundSection">
             <h4><i class="fas fa-square"></i> Màu viền container</h4>
             <div class="background-options">
-                <div class="bg-option" style="background: #c41e3a;" data-name="Đỏ Noel" onclick="changeBorderColor('border-red', '#c41e3a')"></div>
-                <div class="bg-option" style="background: #2a9d8f;" data-name="Xanh Ngọc" onclick="changeBorderColor('border-green', '#2a9d8f')"></div>
-                <div class="bg-option" style="background: #1e3c72;" data-name="Xanh Dương" onclick="changeBorderColor('border-blue', '#1e3c72')"></div>
-                <div class="bg-option" style="background: #5a189a;" data-name="Tím Đậm" onclick="changeBorderColor('border-purple', '#5a189a')"></div>
-                <div class="bg-option" style="background: #ff9e00;" data-name="Vàng Kim" onclick="changeBorderColor('border-gold', '#ff9e00')"></div>
-                <div class="bg-option" style="background: #ff6b6b;" data-name="Hồng Đào" onclick="changeBorderColor('border-pink', '#ff6b6b')"></div>
-                <div class="bg-option" style="background: #ffffff; border: 2px solid #ccc;" data-name="Trắng" onclick="changeBorderColor('border-white', '#ffffff')"></div>
-                <div class="bg-option" style="background: #333333;" data-name="Đen" onclick="changeBorderColor('border-black', '#333333')"></div>
+                <div class="bg-option" style="background: #c41e3a;" data-name="Đỏ Noel" data-class="border-red" data-color="#c41e3a"></div>
+                <div class="bg-option" style="background: #2a9d8f;" data-name="Xanh Ngọc" data-class="border-green" data-color="#2a9d8f"></div>
+                <div class="bg-option" style="background: #1e3c72;" data-name="Xanh Dương" data-class="border-blue" data-color="#1e3c72"></div>
+                <div class="bg-option" style="background: #5a189a;" data-name="Tím Đậm" data-class="border-purple" data-color="#5a189a"></div>
+                <div class="bg-option" style="background: #ff9e00;" data-name="Vàng Kim" data-class="border-gold" data-color="#ff9e00"></div>
+                <div class="bg-option" style="background: #ff6b6b;" data-name="Hồng Đào" data-class="border-pink" data-color="#ff6b6b"></div>
+                <div class="bg-option" style="background: #ffffff; border: 2px solid #ccc;" data-name="Trắng" data-class="border-white" data-color="#ffffff"></div>
+                <div class="bg-option" style="background: #333333;" data-name="Đen" data-class="border-black" data-color="#333333"></div>
             </div>
         </div>
 
@@ -972,14 +1178,14 @@
         <div class="background-section" id="boxBackgroundSection">
             <h4><i class="fas fa-object-group"></i> Nền message box</h4>
             <div class="background-options">
-                <div class="bg-option box-bg-1" data-name="Hồng Nhạt" onclick="changeBoxBackground('box-bg-1')"></div>
-                <div class="bg-option box-bg-2" data-name="Xanh Nhạt" onclick="changeBoxBackground('box-bg-2')"></div>
-                <div class="bg-option box-bg-3" data-name="Xanh Lá" onclick="changeBoxBackground('box-bg-3')"></div>
-                <div class="bg-option box-bg-4" data-name="Vàng Nhạt" onclick="changeBoxBackground('box-bg-4')"></div>
-                <div class="bg-option box-bg-5" data-name="Tím Nhạt" onclick="changeBoxBackground('box-bg-5')"></div>
-                <div class="bg-option box-bg-6" data-name="Hồng Đậm" onclick="changeBoxBackground('box-bg-6')"></div>
-                <div class="bg-option box-bg-7" data-name="Xanh Lá Đậm" onclick="changeBoxBackground('box-bg-7')"></div>
-                <div class="bg-option box-bg-8" data-name="Tím Xanh" onclick="changeBoxBackground('box-bg-8')"></div>
+                <div class="bg-option box-bg-1" data-name="Hồng Nhạt" data-class="box-bg-1"></div>
+                <div class="bg-option box-bg-2" data-name="Xanh Nhạt" data-class="box-bg-2"></div>
+                <div class="bg-option box-bg-3" data-name="Xanh Lá" data-class="box-bg-3"></div>
+                <div class="bg-option box-bg-4" data-name="Vàng Nhạt" data-class="box-bg-4"></div>
+                <div class="bg-option box-bg-5" data-name="Tím Nhạt" data-class="box-bg-5"></div>
+                <div class="bg-option box-bg-6" data-name="Hồng Đậm" data-class="box-bg-6"></div>
+                <div class="bg-option box-bg-7" data-name="Xanh Lá Đậm" data-class="box-bg-7"></div>
+                <div class="bg-option box-bg-8" data-name="Tím Xanh" data-class="box-bg-8"></div>
             </div>
         </div>
 
@@ -990,19 +1196,19 @@
             <!-- Color Picker -->
             <div class="color-picker-container">
                 <label class="color-picker-label">Chọn màu đơn:</label>
-                <input type="color" class="color-picker" id="solidColorPicker" value="#1a472a" onchange="applySolidColor(this.value)">
+                <input type="color" class="color-picker" id="solidColorPicker" value="#1a472a">
             </div>
 
             <!-- Gradient Creator -->
             <div class="gradient-creator">
                 <label class="color-picker-label">Tạo gradient:</label>
                 <div class="gradient-controls">
-                    <input type="color" class="gradient-color" id="gradientColor1" value="#1a472a" onchange="updateGradient()">
-                    <input type="color" class="gradient-color" id="gradientColor2" value="#2a623d" onchange="updateGradient()">
-                    <input type="color" class="gradient-color" id="gradientColor3" value="#5d9b6c" onchange="updateGradient()">
+                    <input type="color" class="gradient-color" id="gradientColor1" value="#1a472a">
+                    <input type="color" class="gradient-color" id="gradientColor2" value="#2a623d">
+                    <input type="color" class="gradient-color" id="gradientColor3" value="#5d9b6c">
                 </div>
                 <div class="gradient-preview" id="gradientPreview"></div>
-                <button onclick="applyGradient()" style="margin: 5px 0; padding: 10px; font-size: 14px;">
+                <button id="applyGradientBtn">
                     <i class="fas fa-check"></i> Áp dụng Gradient
                 </button>
             </div>
@@ -1010,11 +1216,11 @@
             <!-- Image Upload -->
             <div class="image-upload-container">
                 <label class="color-picker-label">Tải ảnh nền:</label>
-                <input type="file" id="bgImageUpload" accept="image/*" onchange="previewImage(this)" style="margin: 10px 0; width: 100%;">
+                <input type="file" id="bgImageUpload" accept="image/*" style="margin: 10px 0; width: 100%;">
                 <div class="image-preview" id="imagePreview">
                     <span style="color: #666;">Preview sẽ hiển thị ở đây</span>
                 </div>
-                <button onclick="applyImageBackground()" style="margin: 5px 0; padding: 10px; font-size: 14px; background: #2a9d8f;">
+                <button id="applyImageBtn">
                     <i class="fas fa-image"></i> Áp dụng Ảnh Nền
                 </button>
             </div>
@@ -1022,41 +1228,34 @@
 
         <!-- Music Controls -->
         <div class="music-controls">
-            <button class="music-btn" onclick="toggleMusic()" id="playPauseBtn">
+            <button class="music-btn" id="playPauseBtn">
                 <i class="fas fa-play" id="playPauseIcon"></i>
             </button>
-            <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider" oninput="changeVolume(this.value)">
-            <button class="music-btn" onclick="stopMusic()">
+            <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+            <button class="music-btn" id="stopMusicBtn">
                 <i class="fas fa-stop"></i>
             </button>
         </div>
 
         <div class="music-info">
-            <p><i class="fas fa-music"></i> <span id="currentSong">Nhạc Giáng Sinh</span></p>
+            <p><i class="fas fa-video"></i> <span id="currentSong">Video Noel Giáng Sinh</span></p>
             <p><i class="fas fa-volume-up"></i> Âm lượng: <span id="volumeValue">50%</span></p>
+            
+            <!-- NÚT KIỂM TRA -->
+            <button id="testMusicBtn" style="margin-top: 10px; padding: 8px; font-size: 12px; background: #2a9d8f; width: 100%;">
+                <i class="fas fa-bug"></i> Test Video
+            </button>
         </div>
 
         <!-- Admin Section -->
         <div class="admin-only" id="adminSection" style="display: none;">
             <h4><i class="fas fa-crown"></i> Quản trị viên</h4>
             
-            <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
-                <i class="fas fa-info-circle"></i> Nhập mã "namlc1213" ở slide 2 để mở khóa
-            </p>
-
-            <h5><i class="fas fa-music"></i> Nhạc Giáng Sinh</h5>
-            <select id="musicSelect" onchange="changeChristmasMusic(this.value)" style="margin: 10px 0; width: 100%;">
-                <option value="1">Jingle Bells - Nhạc vui</option>
-                <option value="2">Last Christmas - Nhạc tình</option>
-                <option value="3">All I Want for Christmas - Nhạc pop</option>
-                <option value="4">Silent Night - Nhạc nhẹ</option>
-                <option value="custom">Tải nhạc của bạn</option>
-            </select>
-
-            <div id="customMusicUpload" style="display: none;">
-                <input type="file" id="musicUpload" accept="audio/*" style="margin: 10px 0; width: 100%;">
-                <button onclick="uploadCustomMusic()" style="margin: 5px 0; padding: 10px; font-size: 14px; background: #2a9d8f; width: 100%;">
-                    <i class="fas fa-upload"></i> Tải nhạc lên
+            <h5><i class="fas fa-video"></i> Tải video mới</h5>
+            <div id="customMusicUpload">
+                <input type="file" id="musicUpload" accept="video/*" style="margin: 10px 0; width: 100%;">
+                <button id="uploadMusicBtn">
+                    <i class="fas fa-upload"></i> Tải video lên
                 </button>
             </div>
         </div>
@@ -1068,8 +1267,8 @@
         </div>
     </div>
 
-    <!-- Audio Element -->
-    <audio id="bgMusic" loop></audio>
+    <!-- Video Element thay cho Audio -->
+    <video id="bgMusic" loop style="display: none;"></video>
 
     <div class="container" id="mainContainer">
         <!-- Progress Bar -->
@@ -1097,7 +1296,10 @@
                     <p>🎁 Có một món quà Giáng Sinh đặc biệt dành cho bạn...</p>
                     <p>Trong đêm Noel ấm áp này, hãy mở trái tim mình ra 💖</p>
                     <p style="color: #c41e3a; font-weight: 600; margin-top: 10px;">
-                        <i class="fas fa-star"></i> Mùa của yêu thương và tỏ tình <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i> Chúc cậu có một ngày giáng sinh an lành <i class="fas fa-star"></i>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        Có một món quà bất ngờ mà tớ muốn dành tặng cho cậu...
                     </p>
                 </div>
 
@@ -1116,7 +1318,7 @@
                     Câu trả lời của bạn sẽ là món quà Giáng Sinh đẹp nhất
                 </p>
 
-                <button onclick="nextSlide()">
+                <button id="nextSlideBtn">
                     <i class="fas fa-gift"></i> Mở quà ngay <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
@@ -1128,37 +1330,30 @@
                 <h2><i class="fas fa-star"></i> Câu hỏi Giáng Sinh</h2>
                 
                 <div class="message-box" id="messageBox2">
-                    <p style="font-size: 22px; font-weight: 600; color: #c41e3a;">
-                        "Trong mùa Giáng Sinh này, bạn có muốn cùng tôi viết tiếp câu chuyện tình yêu không?" 💘
+                    <p style="font-size: 20px; font-weight: 600; color: #c41e3a; line-height: 1.5;">
+                        "Trước đây có lẽ chỉ vài lời vu vơ với nhau, nhưng ở đây tớ muốn hỏi cậu là liệu cậu có thể để mình được chính thức ở bên cậu và trở thành người yêu của cậu được không?" 💘
                     </p>
-                    <p style="margin-top: 10px; font-style: italic;">
+                    <p style="margin-top: 15px; font-style: italic; color: #666;">
                         🎄 Đây là món quà Noel đặc biệt nhất...
                     </p>
                 </div>
 
-                <div class="response-buttons">
-                    <button class="response-btn yes" onclick="selectAnswer('yes')">
-                        <i class="fas fa-heart"></i> Có, tôi đồng ý! 🎁
-                    </button>
-                    <button class="response-btn no" onclick="selectAnswer('no')">
-                        <i class="fas fa-snowflake"></i> Không, xin lỗi ❄️
-                    </button>
-                    <button class="response-btn maybe" onclick="selectAnswer('maybe')">
-                        <i class="fas fa-thinking"></i> Để tôi suy nghĩ... 🤔
-                    </button>
+                <div style="margin: 20px 0;">
+                    <textarea id="userResponse" placeholder="Hãy viết câu trả lời của cậu ở đây..." maxlength="500" style="height: 150px;"></textarea>
+                    <p style="font-size: 12px; color: #888; text-align: right; margin-top: 5px;">
+                        <span id="charCount">0</span>/500 ký tự
+                    </p>
                 </div>
-
-                <textarea id="userMessage" placeholder="Viết lời nhắn Giáng Sinh cho người gửi... (tuỳ chọn)" maxlength="300"></textarea>
                 
-                <input type="text" id="userName" placeholder="Tên hoặc biệt danh của bạn (bắt buộc)" required oninput="checkAdminAccess()">
+                <input type="text" id="userName" placeholder="Nhập tên/biệt danh của bạn 🎁" required>
 
                 <div style="text-align: center; margin: 10px 0;">
                     <p style="font-size: 12px; color: #888;">
-                        <i class="fas fa-snowman"></i> Nhập mã "namlc1213" để mở tính năng đặc biệt
+                        <i class="fas fa-snowman"></i> Câu trả lời sẽ được gửi đến tớ
                     </p>
                 </div>
 
-                <button onclick="submitResponse()" id="submitBtn">
+                <button id="submitBtn">
                     <i class="fas fa-paper-plane"></i> Gửi câu trả lời
                 </button>
 
@@ -1175,15 +1370,14 @@
                     <i class="fas fa-gift"></i>
                 </div>
                 
-                <h2>Cảm ơn bạn! 🎄</h2>
+                <h2>Cảm ơn cậu! 🎄</h2>
                 
                 <div class="simple-message" id="messageBox3">
                     <p class="highlight-text" id="thankYouMessage">
-                        Cảm ơn bạn đã trả lời trong mùa Giáng Sinh!
+                        Cảm ơn cậu đã cho tớ câu trả lời!
                     </p>
                     <p class="final-message">
-                        Người gửi đã nhận được món quà tinh thần quý giá từ bạn. 
-                        Hy vọng Noel này sẽ thật ấm áp và tràn ngập yêu thương! 💕
+                        Tớ đã nhận món quà lớn nhất của Noel này rồi, chúc cậu có 1 ngày Noel thật vui vẻ, hạnh phúc nha. Tớ có một bất ngờ đã tới nhà cậu rồi đó.
                     </p>
                     
                     <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; font-size: 24px;">
@@ -1196,19 +1390,22 @@
                 </div>
 
                 <div class="reply-section">
-                    <h3><i class="fas fa-reply"></i> Gửi lời chúc Giáng Sinh?</h3>
-                    <textarea id="replyMessage" placeholder="Viết lời chúc Noel cho người gửi..."></textarea>
+                    <h3><i class="fas fa-reply"></i> Nếu cậu còn lời với tớ có thể điền ở đây và bấm gửi hoặc nhắn cho tớ</h3>
+                    <textarea id="replyMessage" placeholder="Viết lời nhắn cho tớ..."></textarea>
                     
-                    <button onclick="sendReply()">
-                        <i class="fas fa-share"></i> Gửi lời chúc
+                    <button id="sendReplyBtn">
+                        <i class="fas fa-share"></i> Gửi lời nhắn
                     </button>
                 </div>
 
                 <div class="final-actions" style="margin-top: 30px;">
-                    <button onclick="shareLink()" style="background: #1a472a;">
+                    <p style="text-align: center; font-size: 18px; color: #c41e3a; font-weight: 600; margin-bottom: 20px;">
+                        Tóm lại chúc cậu có một ngày lễ vui vẻ nha! I Love You 💖
+                    </p>
+                    <button id="shareLinkBtn" style="background: #1a472a;">
                         <i class="fas fa-share-alt"></i> Chia sẻ trang Noel
                     </button>
-                    <button onclick="createYourOwn()" style="background: #ff9e00; margin-top: 10px;">
+                    <button id="createYourOwnBtn" style="background: #ff9e00; margin-top: 10px;">
                         <i class="fas fa-plus"></i> Tạo trang Noel của bạn
                     </button>
                 </div>
@@ -1220,6 +1417,16 @@
     <div class="notification" id="notification"></div>
 
     <script>
+        // ============ HIỆU ỨNG BÔNG TUYẾT NỔ ============
+        let lastClickTime = 0;
+        const clickTimeout = 300;
+        let animationFrameId = null;
+        
+        let lastClickPosition = { x: 0, y: 0 };
+        let activeSnowflakes = [];
+        let activeExplosions = [];
+        let activeFallingParticles = [];
+
         // ============ CẤU HÌNH TELEGRAM ============
         const TELEGRAM_CONFIG = {
             botToken: "8503904022:AAElyplbto709iklzz6qRTAhnszWjMj_-1Q",
@@ -1227,13 +1434,15 @@
             enabled: true
         };
 
-        // ============ BIẾN TOÀN CỤC ============
+        // ============ BIẾN TOÀN CỤC CỦA WEB NOEL ============
         let currentSlide = 1;
         let selectedAnswer = '';
-        let isMusicPlaying = false;
+        let isVideoPlaying = false;
         let selectedSlideForBg = 'all';
         let isAdmin = false;
         const ADMIN_CODE = "namlc1213";
+        let isMuted = false;
+        let audioContext;
         
         // Settings storage
         let currentSettings = {
@@ -1246,26 +1455,18 @@
             slide: 'all'
         };
 
-        // Nhạc Giáng Sinh
-        const christmasMusic = {
-            1: "https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3",
-            2: "https://assets.mixkit.co/music/preview/mixkit-christmas-time-244.mp3",
-            3: "https://assets.mixkit.co/music/preview/mixkit-christmas-cheer-243.mp3",
-            4: "https://assets.mixkit.co/music/preview/mixkit-silent-night-304.mp3"
-        };
-
         // ============ KHỞI TẠO TRANG ============
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎨 Website Noel với tùy chỉnh nâng cao đã sẵn sàng!');
+            console.log('🎨 Website Noel với hiệu ứng bông tuyết nổ đã sẵn sàng!');
             
-            // Tạo tuyết rơi
-            createSnowflakes();
+            // Tạo icon Noel rơi tự do
+            createFallingIcons();
             
             // Tạo trang trí Noel
             createChristmasDecorations();
             
-            // Khởi tạo nhạc
-            initChristmasMusic();
+            // Khởi tạo video từ GitHub
+            initVideo();
             
             // Load settings
             loadSettings();
@@ -1278,6 +1479,23 @@
             
             // Check scroll on load
             updateScrollButtons();
+            
+            // Khởi tạo Audio Context
+            initAudioContext();
+            
+            // Thiết lập sự kiện click cho body (chạm màn hình)
+            document.body.addEventListener('click', handleBodyClick);
+            
+            // Thiết lập sự kiện cho các nút
+            setupEventListeners();
+            
+            // Đếm ký tự cho textarea
+            const userResponse = document.getElementById('userResponse');
+            const charCount = document.getElementById('charCount');
+            
+            userResponse.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
             
             // Focus vào ô tên khi vào slide 2
             const observer = new MutationObserver(function(mutations) {
@@ -1292,27 +1510,360 @@
                 attributes: true,
                 attributeFilter: ['class']
             });
+
+            // Tự động phát nhạc sau 1 giây
+            setTimeout(() => {
+                const bgVideo = document.getElementById('bgMusic');
+                if (bgVideo.readyState >= 2) { // HAVE_ENOUGH_DATA
+                    tryAutoPlay();
+                } else {
+                    bgVideo.addEventListener('canplay', tryAutoPlay, { once: true });
+                }
+            }, 1000);
         });
 
-        // ============ TUYẾT RƠI ============
-        function createSnowflakes() {
-            const snowflakesContainer = document.getElementById('snowflakes');
-            for (let i = 0; i < 50; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                const size = Math.random() * 5 + 2;
-                snowflake.style.width = size + 'px';
-                snowflake.style.height = size + 'px';
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.top = Math.random() * -100 + 'px';
-                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
-                snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
-                snowflake.style.animationDelay = Math.random() * 5 + 's';
-                snowflakesContainer.appendChild(snowflake);
+        // ===== KHỞI TẠO AUDIO CONTEXT =====
+        function initAudioContext() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (e) {
+                console.log("Trình duyệt không hỗ trợ Web Audio API");
+                showNotification("Trình duyệt không hỗ trợ âm thanh tương tác", "warning");
             }
         }
 
-        // ============ TRANG TRÍ NOEL ============
+        // ===== HỆ THỐNG VIDEO TỪ GITHUB - FIXED =====
+        function initVideo() {
+            const bgVideo = document.getElementById('bgMusic');
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const currentSongElement = document.getElementById('currentSong');
+            
+            // Sử dụng RawGit CDN thay vì raw.githubusercontent.com trực tiếp
+            const videoURLs = [
+                "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4",
+                "https://cdn.jsdelivr.net/gh/hahahnoob181-ctrl/-dasdasd@main/Noel.mp4",
+                "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4"
+            ];
+            
+            console.log("🎥 Đang tải video Noel...");
+            
+            // Thử từng URL cho đến khi tìm được URL hoạt động
+            let currentURLIndex = 0;
+            
+            function tryNextURL() {
+                if (currentURLIndex >= videoURLs.length) {
+                    console.error("❌ Tất cả link video đều không hoạt động!");
+                    showNotification("❌ Không thể tải video Noel", "error");
+                    return;
+                }
+                
+                const videoURL = videoURLs[currentURLIndex];
+                console.log(`🔄 Thử URL ${currentURLIndex + 1}:`, videoURL);
+                
+                bgVideo.src = videoURL;
+                bgVideo.volume = 0.8;
+                bgVideo.loop = true;
+                bgVideo.preload = "auto";
+                
+                // Hiển thị tên video
+                currentSongElement.textContent = "Video Noel Giáng Sinh";
+                
+                // Sự kiện khi video có thể phát
+                bgVideo.addEventListener('canplay', function() {
+                    console.log(`✅ URL ${currentURLIndex + 1} hoạt động:`, videoURL);
+                    showNotification("🎬 Video đã sẵn sàng!", "success");
+                    
+                    // Tự động phát
+                    setTimeout(tryAutoPlay, 500);
+                }, { once: true });
+                
+                // Sự kiện lỗi
+                bgVideo.addEventListener('error', function(e) {
+                    console.error(`❌ URL ${currentURLIndex + 1} lỗi:`, videoURL);
+                    console.error("Chi tiết lỗi:", bgVideo.error);
+                    
+                    // Thử URL tiếp theo
+                    currentURLIndex++;
+                    setTimeout(tryNextURL, 500);
+                }, { once: true });
+                
+                // Tải video
+                bgVideo.load();
+            }
+            
+            // Bắt đầu thử URL đầu tiên
+            tryNextURL();
+            
+            // Sự kiện khi video phát
+            bgVideo.addEventListener('play', function() {
+                console.log("▶️ ĐANG PHÁT VIDEO");
+                isVideoPlaying = true;
+                playPauseIcon.className = 'fas fa-pause';
+            });
+            
+            // Sự kiện khi video tạm dừng
+            bgVideo.addEventListener('pause', function() {
+                console.log("⏸️ ĐÃ TẠM DỪNG VIDEO");
+                isVideoPlaying = false;
+                playPauseIcon.className = 'fas fa-play';
+            });
+        }
+
+        // ===== TỰ ĐỘNG PHÁT VIDEO =====
+        function tryAutoPlay() {
+            const bgVideo = document.getElementById('bgMusic');
+            
+            if (!bgVideo.src) {
+                console.log("🔄 Video chưa sẵn sàng, đang tải...");
+                return;
+            }
+            
+            if (!isVideoPlaying && !isMuted) {
+                const playPromise = bgVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("🎉 TỰ ĐỘNG PHÁT VIDEO THÀNH CÔNG!");
+                        showNotification("🎬 Video Noel đang phát!", "success");
+                    }).catch(error => {
+                        console.log("🖱️ Chờ user click để phát video...", error);
+                        // Hiển thị thông báo yêu cầu user click
+                        showNotification("👆 Nhấn vào trang để phát nhạc Noel", "info");
+                    });
+                }
+            }
+        }
+
+        // ===== KIỂM TRA LINK VIDEO =====
+        function testVideoLink() {
+            console.log("🔍 KIỂM TRA LINK VIDEO...");
+            
+            const testURLs = [
+                "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4",
+                "https://cdn.jsdelivr.net/gh/hahahnoob181-ctrl/-dasdasd@main/Noel.mp4",
+                "https://raw.githack.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4"
+            ];
+            
+            let allFailed = true;
+            
+            testURLs.forEach((url, index) => {
+                const testVideo = document.createElement('video');
+                testVideo.src = url;
+                
+                testVideo.addEventListener('error', function() {
+                    console.error(`🚫 Link ${index + 1} không hoạt động:`, url);
+                });
+                
+                testVideo.addEventListener('canplay', function() {
+                    console.log(`✅ Link ${index + 1} HOẠT ĐỘNG:`, url);
+                    console.log("Thời lượng:", testVideo.duration, "giây");
+                    allFailed = false;
+                });
+                
+                testVideo.load();
+            });
+            
+            setTimeout(() => {
+                if (allFailed) {
+                    console.error("❌ TẤT CẢ LINK VIDEO ĐỀU KHÔNG HOẠT ĐỘNG!");
+                    showNotification("❌ Tất cả link video đều không hoạt động", "error");
+                }
+            }, 3000);
+        }
+
+        function toggleVideo() {
+            const bgVideo = document.getElementById('bgMusic');
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            
+            console.log("🎛️ Nhấn nút Play/Pause. Trạng thái hiện tại:", isVideoPlaying ? "Đang phát" : "Đang dừng");
+            
+            if (isVideoPlaying) {
+                bgVideo.pause();
+                console.log("⏸️ Đã tạm dừng video");
+                showNotification("⏸️ Video đã tạm dừng", "info");
+            } else {
+                const playPromise = bgVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("▶️ Đang phát video");
+                        showNotification("▶️ Video đang phát", "success");
+                    }).catch(error => {
+                        console.error("❌ Lỗi khi phát video:", error);
+                        showNotification("🔄 Đang thử tải lại video...", "warning");
+                        
+                        // Thử lại với video backup
+                        setTimeout(() => {
+                            bgVideo.src = "https://assets.mixkit.co/video/preview/mixkit-christmas-background-32977-large.mp4";
+                            document.getElementById('currentSong').textContent = "Video Noel (Backup)";
+                            bgVideo.load();
+                            setTimeout(() => {
+                                bgVideo.play().catch(e => {
+                                    console.error("Vẫn lỗi:", e);
+                                    showNotification("🎵 Chuyển sang nhạc Giáng Sinh", "info");
+                                    bgVideo.src = "https://assets.mixkit.co/music/preview/mixkit-christmas-is-coming-1206.mp3";
+                                    bgVideo.play();
+                                });
+                            }, 500);
+                        }, 1000);
+                    });
+                }
+            }
+        }
+
+        function stopVideo() {
+            const bgVideo = document.getElementById('bgMusic');
+            bgVideo.pause();
+            bgVideo.currentTime = 0;
+            document.getElementById('playPauseIcon').className = 'fas fa-play';
+            isVideoPlaying = false;
+            console.log("⏹️ Đã dừng video hoàn toàn");
+            showNotification("⏹️ Đã dừng video", "info");
+        }
+
+        function changeVolume(value) {
+            const bgVideo = document.getElementById('bgMusic');
+            bgVideo.volume = value / 100;
+            document.getElementById('volumeValue').textContent = value + '%';
+            console.log("🔊 Âm lượng:", value + '%');
+        }
+
+        function toggleMute() {
+            const bgVideo = document.getElementById('bgMusic');
+            const muteBtn = document.getElementById('muteToggle');
+            const soundStatus = document.getElementById('soundStatus');
+            
+            isMuted = !isMuted;
+            bgVideo.muted = isMuted;
+            
+            if (isMuted) {
+                muteBtn.classList.add('muted');
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                soundStatus.textContent = 'Âm thanh: Tắt';
+                console.log("🔇 Đã tắt tiếng");
+                showNotification('🔇 Âm thanh đã tắt', 'info');
+            } else {
+                muteBtn.classList.remove('muted');
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                soundStatus.textContent = 'Âm thanh: Bật';
+                console.log("🔊 Đã bật tiếng");
+                showNotification('🔊 Âm thanh đã bật', 'success');
+            }
+        }
+
+        // ===== HỆ THỐNG ÂM THANH TƯƠNG TÁC =====
+        function playClickSound(type = 'tap') {
+            if (isMuted || !audioContext) return;
+            
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // GIẢM ÂM LƯỢNG GỐC ĐI 15%
+                const VOLUME_REDUCTION = 0.85; // Giảm 15%
+                
+                if (type === 'tap') {
+                    oscillator.frequency.value = 600;
+                    oscillator.type = 'sine';
+                    // Áp dụng giảm âm lượng: 0.1 * 0.85 = 0.085
+                    gainNode.gain.setValueAtTime(0.1 * VOLUME_REDUCTION, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01 * VOLUME_REDUCTION, audioContext.currentTime + 0.2);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                } else if (type === 'button') {
+                    oscillator.frequency.value = 800;
+                    oscillator.type = 'sine';
+                    // Áp dụng giảm âm lượng: 0.15 * 0.85 = 0.1275
+                    gainNode.gain.setValueAtTime(0.15 * VOLUME_REDUCTION, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01 * VOLUME_REDUCTION, audioContext.currentTime + 0.15);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.15);
+                } else if (type === 'success') {
+                    oscillator.frequency.value = 1200;
+                    oscillator.type = 'sine';
+                    // Áp dụng giảm âm lượng: 0.2 * 0.85 = 0.17
+                    gainNode.gain.setValueAtTime(0.2 * VOLUME_REDUCTION, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01 * VOLUME_REDUCTION, audioContext.currentTime + 0.3);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.3);
+                }
+            } catch (e) {
+                // Bỏ qua lỗi âm thanh
+            }
+        }
+
+        function handleBodyClick(event) {
+            if (event.target.tagName !== 'BUTTON' && event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA' && event.target.tagName !== 'SELECT') {
+                playClickSound('tap');
+                createClickEffect(event.clientX, event.clientY);
+                
+                // Thử phát video khi user click lần đầu
+                if (!isVideoPlaying) {
+                    tryAutoPlay();
+                }
+            }
+        }
+
+        function createClickEffect(x, y) {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.style.left = x + 'px';
+            effect.style.top = y + 'px';
+            document.body.appendChild(effect);
+            
+            setTimeout(() => {
+                effect.remove();
+            }, 600);
+        }
+
+        // ===== TẠO ICON NOEL RƠI TỰ DO =====
+        function createFallingIcons() {
+            const icons = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔', '⛄', '✨', '💝', '🧦'];
+            const container = document.getElementById('falling-icons');
+            
+            // Tạo 25 icon rơi
+            for (let i = 0; i < 25; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'falling-icon';
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                
+                // Kích thước ngẫu nhiên
+                const size = 15 + Math.random() * 25;
+                icon.style.fontSize = `${size}px`;
+                
+                // Vị trí bắt đầu ngẫu nhiên
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.top = -50 + 'px';
+                
+                // Tốc độ rơi ngẫu nhiên
+                const duration = 5 + Math.random() * 15;
+                icon.style.animationDuration = `${duration}s`;
+                
+                // Độ trễ ngẫu nhiên
+                const delay = Math.random() * 10;
+                icon.style.animationDelay = `${delay}s`;
+                
+                // Độ mờ ngẫu nhiên
+                icon.style.opacity = 0.3 + Math.random() * 0.5;
+                
+                container.appendChild(icon);
+                
+                // Tự động xóa và tạo lại icon khi rơi xong
+                setTimeout(() => {
+                    if (icon.parentNode) {
+                        icon.parentNode.removeChild(icon);
+                    }
+                }, (duration + delay) * 1000);
+            }
+            
+            // Tiếp tục tạo icon mới
+            setTimeout(createFallingIcons, 2000);
+        }
+
+        // ===== TRANG TRÍ NOEL =====
         function createChristmasDecorations() {
             const decorationsContainer = document.getElementById('decorations');
             const emojis = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔'];
@@ -1331,15 +1882,178 @@
             }
         }
 
-        // ============ HỆ THỐNG NỀN NÂNG CAO ============
+        // ===== THIẾT LẬP EVENT LISTENERS =====
+        function setupEventListeners() {
+            // Nút mute
+            document.getElementById('muteToggle').addEventListener('click', function(e) {
+                toggleMute();
+                playClickSound('button');
+                e.stopPropagation();
+            });
+
+            // Video controls
+            document.getElementById('playPauseBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                toggleVideo();
+                e.stopPropagation();
+            });
+
+            document.getElementById('stopMusicBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                stopVideo();
+                e.stopPropagation();
+            });
+
+            document.getElementById('volumeSlider').addEventListener('input', function(e) {
+                changeVolume(this.value);
+                e.stopPropagation();
+            });
+
+            // Nút test video
+            document.getElementById('testMusicBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                testVideoLink();
+                showNotification("🔍 Đang kiểm tra link video... Xem Console!", "info");
+                e.stopPropagation();
+            });
+
+            // Các nút chức năng
+            document.getElementById('nextSlideBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                nextSlide();
+            });
+
+            document.getElementById('submitBtn').addEventListener('click', function(e) {
+                playClickSound('success');
+                submitResponse();
+            });
+
+            document.getElementById('sendReplyBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                sendReply();
+            });
+
+            document.getElementById('shareLinkBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                shareLink();
+            });
+
+            document.getElementById('createYourOwnBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                createYourOwn();
+            });
+
+            // Customization panel
+            document.getElementById('customizationToggle').addEventListener('click', function(e) {
+                playClickSound('button');
+                toggleCustomizationPanel();
+                e.stopPropagation();
+            });
+
+            document.getElementById('closePanel').addEventListener('click', function(e) {
+                playClickSound('button');
+                toggleCustomizationPanel();
+                e.stopPropagation();
+            });
+
+            // Các nút trong customization panel
+            document.querySelectorAll('.background-tab').forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    playClickSound('button');
+                    switchBackgroundTab(this.dataset.tab);
+                    e.stopPropagation();
+                });
+            });
+
+            document.querySelectorAll('.slide-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    playClickSound('button');
+                    selectSlide(this.dataset.slide);
+                    e.stopPropagation();
+                });
+            });
+
+            document.querySelectorAll('.bg-option').forEach(opt => {
+                opt.addEventListener('click', function(e) {
+                    playClickSound('button');
+                    
+                    if (this.closest('#pageBackgroundSection')) {
+                        changePageBackground(this.dataset.class, this.dataset.style);
+                    } else if (this.closest('#borderBackgroundSection')) {
+                        changeBorderColor(this.dataset.class, this.dataset.color);
+                    } else if (this.closest('#boxBackgroundSection')) {
+                        changeBoxBackground(this.dataset.class);
+                    }
+                    e.stopPropagation();
+                });
+            });
+
+            // Scroll buttons
+            document.getElementById('scrollTopBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                scrollToTop();
+                e.stopPropagation();
+            });
+
+            document.getElementById('scrollBottomBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                scrollToBottom();
+                e.stopPropagation();
+            });
+
+            // Custom background controls
+            document.getElementById('solidColorPicker').addEventListener('change', function(e) {
+                playClickSound('button');
+                applySolidColor(this.value);
+                e.stopPropagation();
+            });
+
+            document.getElementById('applyGradientBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                applyGradient();
+                e.stopPropagation();
+            });
+
+            document.getElementById('applyImageBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                applyImageBackground();
+                e.stopPropagation();
+            });
+
+            // Gradient color inputs
+            document.querySelectorAll('.gradient-color').forEach(input => {
+                input.addEventListener('change', function(e) {
+                    updateGradient();
+                    e.stopPropagation();
+                });
+            });
+
+            // Admin controls
+            document.getElementById('userName').addEventListener('input', function(e) {
+                checkAdminAccess();
+                e.stopPropagation();
+            });
+
+            document.getElementById('uploadMusicBtn').addEventListener('click', function(e) {
+                playClickSound('button');
+                uploadCustomVideo();
+                e.stopPropagation();
+            });
+
+            // Image upload
+            document.getElementById('bgImageUpload').addEventListener('change', function(e) {
+                previewImage(this);
+                e.stopPropagation();
+            });
+        }
+
+        // ===== HỆ THỐNG NỀN NÂNG CAO =====
         function switchBackgroundTab(tabName) {
-            // Cập nhật tabs
             document.querySelectorAll('.background-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            event.target.classList.add('active');
+            document.querySelector(`.background-tab[data-tab="${tabName}"]`).classList.add('active');
             
-            // Hiển thị section tương ứng
             document.querySelectorAll('.background-section').forEach(section => {
                 section.classList.remove('active');
             });
@@ -1350,24 +2064,19 @@
             selectedSlideForBg = slide;
             currentSettings.slide = slide;
             
-            // Cập nhật UI
             document.querySelectorAll('.slide-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            document.querySelector(`.slide-btn[data-slide="${slide}"]`).classList.add('active');
             
-            // Áp dụng lại tất cả settings
             applyAllSettings();
-            
             showNotification(`✅ Đã chọn đổi nền cho ${slide === 'all' ? 'tất cả slide' : 'slide ' + slide}`);
         }
 
-        // ===== NỀN TRANG =====
         function changePageBackground(bgClass, bgStyle) {
             currentSettings.pageBackground = bgClass;
             currentSettings.pageBackgroundStyle = bgStyle;
             
-            // Cập nhật UI
             document.querySelectorAll('#pageBackgroundSection .bg-option').forEach(opt => {
                 opt.classList.remove('active');
             });
@@ -1393,12 +2102,10 @@
             }
         }
 
-        // ===== NỀN VIỀN =====
         function changeBorderColor(borderClass, colorValue) {
             currentSettings.borderColor = borderClass;
             currentSettings.borderColorValue = colorValue;
             
-            // Cập nhật UI
             document.querySelectorAll('#borderBackgroundSection .bg-option').forEach(opt => {
                 opt.classList.remove('active');
             });
@@ -1415,11 +2122,9 @@
             container.style.borderColor = currentSettings.borderColorValue;
         }
 
-        // ===== NỀN KHUNG =====
         function changeBoxBackground(bgClass) {
             currentSettings.boxBackground = bgClass;
             
-            // Cập nhật UI
             document.querySelectorAll('#boxBackgroundSection .bg-option').forEach(opt => {
                 opt.classList.remove('active');
             });
@@ -1437,7 +2142,6 @@
             });
         }
 
-        // ===== NỀN TÙY CHỈNH =====
         function applySolidColor(color) {
             if (selectedSlideForBg === 'all') {
                 document.body.style.background = color;
@@ -1498,7 +2202,7 @@
                     } else {
                         const slide = document.getElementById(`slide${selectedSlideForBg}`);
                         if (slide) {
-                            slide.style.background = `url('${imageUrl}') center/cover no-repeat`;
+                            slide.style.background = `url('${imageUrl}) center/cover no-repeat`;
                             slide.classList.add('custom-bg');
                         }
                     }
@@ -1518,7 +2222,7 @@
             applyBoxBackground();
         }
 
-        // ============ LƯU VÀ LOAD SETTINGS ============
+        // ===== LƯU VÀ LOAD SETTINGS =====
         function saveSettings() {
             localStorage.setItem('noelAdvancedSettings', JSON.stringify(currentSettings));
         }
@@ -1530,16 +2234,12 @@
                     currentSettings = JSON.parse(saved);
                     selectedSlideForBg = currentSettings.slide;
                     
-                    // Cập nhật UI
                     document.querySelectorAll('.slide-btn').forEach(btn => {
                         btn.classList.remove('active');
                     });
-                    document.querySelector(`.slide-btn[onclick*="${selectedSlideForBg}"]`)?.classList.add('active');
+                    document.querySelector(`.slide-btn[data-slide="${selectedSlideForBg}"]`)?.classList.add('active');
                     
-                    // Áp dụng settings
                     applyAllSettings();
-                    
-                    // Cập nhật active states
                     updateActiveStates();
                 } catch (e) {
                     console.error('Lỗi load settings:', e);
@@ -1548,97 +2248,18 @@
         }
 
         function updateActiveStates() {
-            // Page background
             document.querySelectorAll('#pageBackgroundSection .bg-option').forEach(opt => {
                 opt.classList.remove('active');
             });
             document.querySelector(`#pageBackgroundSection .${currentSettings.pageBackground}`)?.classList.add('active');
             
-            // Border color
-            document.querySelectorAll('#borderBackgroundSection .bg-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            
-            // Box background
             document.querySelectorAll('#boxBackgroundSection .bg-option').forEach(opt => {
                 opt.classList.remove('active');
             });
             document.querySelector(`#boxBackgroundSection .${currentSettings.boxBackground}`)?.classList.add('active');
         }
 
-        // ============ HỆ THỐNG NHẠC ============
-        const bgMusic = document.getElementById('bgMusic');
-
-        function initChristmasMusic() {
-            bgMusic.src = christmasMusic[1];
-            bgMusic.volume = 0.5;
-        }
-
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                document.getElementById('playPauseIcon').className = 'fas fa-play';
-                isMusicPlaying = false;
-            } else {
-                bgMusic.play().then(() => {
-                    document.getElementById('playPauseIcon').className = 'fas fa-pause';
-                    isMusicPlaying = true;
-                }).catch(error => {
-                    showNotification('Không thể phát nhạc', 'error');
-                });
-            }
-        }
-
-        function stopMusic() {
-            bgMusic.pause();
-            bgMusic.currentTime = 0;
-            document.getElementById('playPauseIcon').className = 'fas fa-play';
-            isMusicPlaying = false;
-        }
-
-        function changeVolume(value) {
-            bgMusic.volume = value / 100;
-            document.getElementById('volumeValue').textContent = value + '%';
-        }
-
-        function changeChristmasMusic(option) {
-            if (option === 'custom') {
-                document.getElementById('customMusicUpload').style.display = 'block';
-            } else {
-                document.getElementById('customMusicUpload').style.display = 'none';
-                if (christmasMusic[option]) {
-                    bgMusic.src = christmasMusic[option];
-                    if (isMusicPlaying) {
-                        bgMusic.play();
-                    }
-                    showNotification('Đã đổi nhạc Giáng Sinh', 'success');
-                }
-            }
-        }
-
-        function uploadCustomMusic() {
-            const fileInput = document.getElementById('musicUpload');
-            const file = fileInput.files[0];
-            
-            if (!file) {
-                showNotification('Vui lòng chọn file nhạc', 'error');
-                return;
-            }
-            
-            if (!file.type.startsWith('audio/')) {
-                showNotification('File phải là file âm thanh', 'error');
-                return;
-            }
-            
-            const url = URL.createObjectURL(file);
-            bgMusic.src = url;
-            if (isMusicPlaying) {
-                bgMusic.play();
-            }
-            showNotification('Đã tải nhạc Giáng Sinh của bạn', 'success');
-        }
-
-        // ============ KIỂM TRA ADMIN ============
+        // ===== KIỂM TRA ADMIN =====
         function checkAdminAccess() {
             const userName = document.getElementById('userName').value.trim();
             
@@ -1646,16 +2267,40 @@
                 isAdmin = true;
                 document.getElementById('adminSection').style.display = 'block';
                 showNotification('🎅 Xin chào Admin! Bạn có thể tùy chỉnh trang Noel', 'success');
+                playClickSound('success');
             }
         }
 
-        // ============ PANEL TÙY CHỈNH ============
+        function uploadCustomVideo() {
+            const fileInput = document.getElementById('musicUpload');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showNotification('Vui lòng chọn file video', 'error');
+                return;
+            }
+            
+            if (!file.type.startsWith('video/')) {
+                showNotification('File phải là file video', 'error');
+                return;
+            }
+            
+            const url = URL.createObjectURL(file);
+            const bgVideo = document.getElementById('bgMusic');
+            bgVideo.src = url;
+            if (isVideoPlaying) {
+                bgVideo.play();
+            }
+            showNotification('Đã tải video Giáng Sinh của bạn', 'success');
+        }
+
+        // ===== PANEL TÙY CHỈNH =====
         function toggleCustomizationPanel() {
             const panel = document.getElementById('customizationPanel');
             panel.classList.toggle('active');
         }
 
-        // ============ SCROLL FUNCTIONS ============
+        // ===== SCROLL FUNCTIONS =====
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1681,7 +2326,7 @@
             }
         }
 
-        // ============ CÁC HÀM ĐIỀU HƯỚNG ============
+        // ===== CÁC HÀM ĐIỀU HƯỚNG =====
         function nextSlide() {
             if (currentSlide < 3) {
                 document.getElementById(`slide${currentSlide}`).classList.remove('active');
@@ -1692,28 +2337,11 @@
                 document.getElementById(`slide${currentSlide}`).classList.add('active');
                 document.querySelector(`.step[data-step="${currentSlide}"]`).classList.add('active');
                 
-                // Scroll to top khi chuyển slide
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
-        function selectAnswer(answer) {
-            selectedAnswer = answer;
-            
-            document.querySelectorAll('.response-btn').forEach(btn => {
-                btn.style.opacity = '0.6';
-                btn.style.transform = 'scale(0.95)';
-            });
-            
-            const selectedBtn = event.target.closest('button');
-            selectedBtn.style.opacity = '1';
-            selectedBtn.style.transform = 'scale(1.05)';
-            selectedBtn.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-            
-            showNotification('Đã chọn câu trả lời!', 'info');
-        }
-
-        // ============ GỬI TELEGRAM ============
+        // ===== GỬI TELEGRAM =====
         async function sendToTelegram(message) {
             if (!TELEGRAM_CONFIG.enabled) return false;
             
@@ -1742,42 +2370,23 @@
             }
         }
 
-        function getAnswerEmoji(answer) {
-            const emojis = {
-                'yes': '💖🎁',
-                'no': '💔❄️',
-                'maybe': '🤔🎄'
-            };
-            return emojis[answer] || '💌';
-        }
-
-        function getAnswerText(answer) {
-            const texts = {
-                'yes': 'CÓ - ĐỒNG Ý! 🎉🎄',
-                'no': 'KHÔNG',
-                'maybe': 'SUY NGHĨ THÊM...'
-            };
-            return texts[answer] || 'Không xác định';
-        }
-
         async function submitResponse() {
             const userName = document.getElementById('userName').value.trim();
-            const message = document.getElementById('userMessage').value.trim();
+            const responseText = document.getElementById('userResponse').value.trim();
             
             if (!userName) {
                 showNotification('Vui lòng nhập tên của bạn!', 'error');
                 return;
             }
             
-            if (!selectedAnswer) {
-                showNotification('Vui lòng chọn câu trả lời!', 'error');
+            if (!responseText) {
+                showNotification('Vui lòng viết câu trả lời!', 'error');
                 return;
             }
             
             const responseData = {
                 userName: userName,
-                answer: selectedAnswer,
-                message: message,
+                answer: responseText,
                 timestamp: new Date().toLocaleString('vi-VN'),
                 theme: 'Noel'
             };
@@ -1791,8 +2400,9 @@
 <b>🎄 CÓ NGƯỜI TRẢ LỜI VÀO GIÁNG SINH!</b>
 
 👤 <b>Tên:</b> ${userName}
-${getAnswerEmoji(selectedAnswer)} <b>Câu trả lời:</b> ${getAnswerText(selectedAnswer)}
-${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
+💌 <b>Câu trả lời:</b>
+${responseText}
+
 ⏰ <b>Thời gian:</b> ${responseData.timestamp}
 🎅 <b>Chủ đề:</b> Giáng Sinh Yêu Thương
             `.trim();
@@ -1802,7 +2412,7 @@ ${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
             if (telegramSent) {
                 showNotification('🎁 Đã gửi thành công!', 'success');
                 
-                updateThankYouMessage(userName, selectedAnswer, message);
+                updateThankYouMessage(userName, responseText);
                 
                 setTimeout(() => {
                     nextSlide();
@@ -1817,29 +2427,15 @@ ${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
             }
         }
 
-        function updateThankYouMessage(userName, answer, extraMessage) {
+        function updateThankYouMessage(userName, responseText) {
             const thankYouMessage = document.getElementById('thankYouMessage');
             
-            let responseText = '';
-            switch(answer) {
-                case 'yes':
-                    responseText = `🎄 Cảm ơn ${userName} đã đồng ý! Noel này thật tuyệt vời!`;
-                    break;
-                case 'no':
-                    responseText = `❄️ Cảm ơn ${userName} đã thành thật trả lời.`;
-                    break;
-                case 'maybe':
-                    responseText = `🎁 Cảm ơn ${userName} đã cân nhắc câu trả lời.`;
-                    break;
-            }
+            thankYouMessage.innerHTML = `Cảm ơn cậu <strong>${userName}</strong> đã cho tớ câu trả lời!`;
             
-            thankYouMessage.innerHTML = responseText;
-            
-            if (extraMessage) {
+            if (responseText) {
                 const finalMessage = document.querySelector('.final-message');
                 finalMessage.innerHTML = `
-                    Với lời nhắn Noel: <em>"${extraMessage}"</em><br><br>
-                    Người gửi đã nhận được món quà tinh thần quý giá từ bạn! 💕
+                    Tớ đã nhận món quà lớn nhất của Noel này rồi, chúc cậu có 1 ngày Noel thật vui vẻ, hạnh phúc nha. Tớ có một bất ngờ đã tới nhà cậu rồi đó.
                 `;
             }
         }
@@ -1853,9 +2449,9 @@ ${message ? `📝 <b>Lời nhắn Noel:</b>\n${message}\n` : ''}
             }
             
             const replyMessage = `
-<b>🎄 LỜI CHÚC NOEL TỪ NGƯỜI TRẢ LỜI:</b>
+<b>🎄 LỜI NHẮN THÊM TỪ NGƯỜI TRẢ LỜI:</b>
 
-📝 <b>Lời chúc:</b>
+📝 <b>Lời nhắn:</b>
 ${reply}
 
 ⏰ <b>Thời gian:</b> ${new Date().toLocaleString('vi-VN')}
@@ -1864,23 +2460,23 @@ ${reply}
             const sent = await sendToTelegram(replyMessage);
             
             if (sent) {
-                showNotification('🎅 Đã gửi lời chúc Noel!', 'success');
+                showNotification('🎅 Đã gửi lời nhắn!', 'success');
                 document.getElementById('replyMessage').value = '';
                 
                 const replySection = document.querySelector('.reply-section');
                 replySection.innerHTML = `
                     <div style="text-align: center; color: #2a9d8f; padding: 20px;">
                         <i class="fas fa-check-circle" style="font-size: 40px;"></i>
-                        <h3>Đã gửi lời chúc!</h3>
-                        <p>Người gửi sẽ rất vui khi nhận được lời chúc Giáng Sinh của bạn</p>
+                        <h3>Đã gửi lời nhắn!</h3>
+                        <p>Tớ đã nhận được lời nhắn thêm của cậu rồi 💖</p>
                     </div>
                 `;
             } else {
-                showNotification('Gửi lời chúc thất bại', 'error');
+                showNotification('Gửi lời nhắn thất bại', 'error');
             }
         }
 
-        // ============ CÁC CHỨC NĂNG KHÁC ============
+        // ===== CÁC CHỨC NĂNG KHÁC =====
         function shareLink() {
             const url = window.location.href;
             
@@ -1919,6 +2515,305 @@ ${reply}
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
+        }
+
+        // Dọn dẹp khi trang đóng
+        window.addEventListener('beforeunload', () => {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+        });
+
+        // ===== HIỆU ỨNG BÔNG TUYẾT NỔ - CÁC HÀM CÒN LẠI =====
+        function handleSnowflakeClick(event) {
+            raf(() => {
+                const currentTime = Date.now();
+                
+                // Lưu vị trí click cuối cùng
+                lastClickPosition.x = event.clientX;
+                lastClickPosition.y = event.clientY;
+                
+                // Kiểm tra xem click có đủ nhanh không
+                if (currentTime - lastClickTime <= clickTimeout) {
+                    // Nếu click đủ nhanh, tạo bông tuyết
+                    createSnowflake();
+                } else {
+                    // Nếu click chậm, vẫn tạo bông tuyết
+                    createSnowflake();
+                }
+                
+                lastClickTime = currentTime;
+            });
+        }
+
+        function createSnowflake() {
+            raf(() => {
+                // Kích thước bông tuyết
+                const snowflakeSize = 45;
+                
+                // Tạo phần tử bông tuyết
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake-explosion-effect';
+                
+                // Thiết lập kích thước và vị trí
+                snowflake.style.width = `${snowflakeSize}px`;
+                snowflake.style.height = `${snowflakeSize}px`;
+                snowflake.style.left = `${lastClickPosition.x - snowflakeSize/2}px`;
+                snowflake.style.top = `${lastClickPosition.y - snowflakeSize/2}px`;
+                
+                // Tạo cấu trúc bên trong cho bông tuyết
+                const snowflakeInner = document.createElement('div');
+                snowflakeInner.className = 'snowflake-explosion-inner';
+                snowflake.appendChild(snowflakeInner);
+                
+                // Tạo 6 nhánh chính
+                const branchCount = 6;
+                const branchLength = snowflakeSize * 0.35;
+                const branchWidth = 1;
+                
+                for (let i = 0; i < branchCount; i++) {
+                    // Tính góc cho mỗi nhánh
+                    const angle = (i * 60);
+                    
+                    // Tạo nhánh chính
+                    const mainBranch = document.createElement('div');
+                    mainBranch.className = 'snowflake-explosion-branch';
+                    
+                    // Đặt kích thước và vị trí
+                    mainBranch.style.width = `${branchLength}px`;
+                    mainBranch.style.height = `${branchWidth}px`;
+                    mainBranch.style.left = `${snowflakeSize/2 - branchWidth/2}px`;
+                    mainBranch.style.top = `${snowflakeSize/2 - branchWidth/2}px`;
+                    mainBranch.style.transformOrigin = 'left center';
+                    mainBranch.style.transform = `rotate(${angle}deg)`;
+                    
+                    // Tạo 2 nhánh phụ trên mỗi nhánh chính
+                    for (let j = 0; j < 2; j++) {
+                        const subAngle = j === 0 ? 30 : -30;
+                        const subBranch = document.createElement('div');
+                        subBranch.className = 'snowflake-explosion-branch';
+                        
+                        const subLength = branchLength * 0.35;
+                        const subWidth = branchWidth * 0.5;
+                        
+                        subBranch.style.width = `${subLength}px`;
+                        subBranch.style.height = `${subWidth}px`;
+                        subBranch.style.left = `${branchLength * 0.85}px`;
+                        subBranch.style.top = `${branchWidth/2 - subWidth/2}px`;
+                        subBranch.style.transformOrigin = 'left center';
+                        subBranch.style.transform = `rotate(${subAngle}deg)`;
+                        
+                        mainBranch.appendChild(subBranch);
+                    }
+                    
+                    snowflakeInner.appendChild(mainBranch);
+                }
+                
+                // Tạo vòng tròn trung tâm - MÀU XANH DƯƠNG ĐẬM HƠN
+                const centerCircle = document.createElement('div');
+                centerCircle.className = 'snowflake-explosion-branch';
+                centerCircle.style.width = `${snowflakeSize * 0.06}px`;
+                centerCircle.style.height = `${snowflakeSize * 0.06}px`;
+                centerCircle.style.borderRadius = '50%';
+                centerCircle.style.left = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
+                centerCircle.style.top = `${snowflakeSize/2 - snowflakeSize*0.06/2}px`;
+                centerCircle.style.background = 'radial-gradient(circle, #1E90FF, #4682B4)';
+                centerCircle.style.boxShadow = '0 0 6px rgba(30, 144, 255, 0.9)';
+                
+                snowflakeInner.appendChild(centerCircle);
+                
+                // Hiệu ứng xuất hiện
+                snowflake.style.animation = 'snowflakeAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+                
+                // Thêm bông tuyết vào trang
+                document.body.appendChild(snowflake);
+                
+                // Thêm vào mảng để quản lý
+                activeSnowflakes.push(snowflake);
+                
+                // Giới hạn số lượng bông tuyết
+                if (activeSnowflakes.length > 5) {
+                    const oldSnowflake = activeSnowflakes.shift();
+                    if (oldSnowflake && document.body.contains(oldSnowflake)) {
+                        oldSnowflake.style.animation = 'snowflakeDisappear 0.18s ease-out forwards';
+                        setTimeout(() => {
+                            if (document.body.contains(oldSnowflake)) {
+                                document.body.removeChild(oldSnowflake);
+                            }
+                        }, 180);
+                    }
+                }
+                
+                // Tự động nổ sau 0.8 giây
+                setTimeout(() => {
+                    if (document.body.contains(snowflake)) {
+                        explodeSnowflake(snowflake);
+                    }
+                }, 800);
+            });
+        }
+
+        function explodeSnowflake(snowflake) {
+            if (!snowflake || !document.body.contains(snowflake)) return;
+            
+            raf(() => {
+                // Lấy vị trí của bông tuyết
+                const rect = snowflake.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                // Hiệu ứng biến mất của bông tuyết
+                snowflake.style.animation = 'snowflakeDisappear 0.2s ease-out forwards';
+                
+                // 1. Tạo hiệu ứng nổ chính (các hạt bay ra xung quanh)
+                const explosion = document.createElement('div');
+                explosion.className = 'explosion-effect';
+                explosion.style.left = `${centerX}px`;
+                explosion.style.top = `${centerY}px`;
+                
+                // Tạo các mảnh vỡ bay ra xung quanh - MÀU XANH DƯƠNG, XANH DƯƠNG NHẠT, TRẮNG
+                const particleCount = 12;
+                const colors = ['#1E90FF', '#87CEEB', '#B0E0E6', '#FFFFFF', '#ADD8E6', '#E0FFFF'];
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'explosion-particle';
+                    
+                    // Kích thước ngẫu nhiên
+                    const particleSize = 2 + Math.random() * 4;
+                    particle.style.width = `${particleSize}px`;
+                    particle.style.height = `${particleSize}px`;
+                    
+                    // Màu sắc ngẫu nhiên
+                    const colorIndex = Math.floor(Math.random() * colors.length);
+                    particle.style.background = colors[colorIndex];
+                    
+                    // Vị trí ban đầu
+                    particle.style.left = '0px';
+                    particle.style.top = '0px';
+                    
+                    // Tính toán hướng và khoảng cách bay
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 20 + Math.random() * 40;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    // Thiết lập CSS custom properties cho animation
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    
+                    // Animation cho particle
+                    const duration = 0.4 + Math.random() * 0.3;
+                    particle.style.animation = `particleExplode ${duration}s ease-out forwards`;
+                    
+                    explosion.appendChild(particle);
+                }
+                
+                // Thêm hiệu ứng nổ vào trang
+                document.body.appendChild(explosion);
+                activeExplosions.push(explosion);
+                
+                // 2. Tạo hiệu ứng hạt rơi từ trên xuống
+                createFallingParticles(centerX, centerY);
+                
+                // Xóa bông tuyết khỏi mảng
+                const snowflakeIndex = activeSnowflakes.indexOf(snowflake);
+                if (snowflakeIndex > -1) {
+                    activeSnowflakes.splice(snowflakeIndex, 1);
+                }
+                
+                // Xóa các phần tử sau khi hoàn thành
+                setTimeout(() => {
+                    raf(() => {
+                        if (document.body.contains(snowflake)) {
+                            document.body.removeChild(snowflake);
+                        }
+                        if (document.body.contains(explosion)) {
+                            document.body.removeChild(explosion);
+                        }
+                        
+                        // Xóa explosion khỏi mảng
+                        const explosionIndex = activeExplosions.indexOf(explosion);
+                        if (explosionIndex > -1) {
+                            activeExplosions.splice(explosionIndex, 1);
+                        }
+                    });
+                }, 500);
+            });
+        }
+
+        function createFallingParticles(centerX, centerY) {
+            const fallingParticleCount = 15;
+            const colors = [
+                'rgba(30, 144, 255, 0.9)',
+                'rgba(135, 206, 235, 0.8)',
+                'rgba(176, 224, 230, 0.8)',
+                'rgba(255, 255, 255, 0.8)',
+                'rgba(173, 216, 230, 0.8)',
+                'rgba(224, 255, 255, 0.8)'
+            ];
+            
+            for (let i = 0; i < fallingParticleCount; i++) {
+                raf(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'falling-particle-effect';
+                    
+                    // Kích thước ngẫu nhiên
+                    const particleSize = 1.5 + Math.random() * 3.5;
+                    particle.style.width = `${particleSize}px`;
+                    particle.style.height = `${particleSize}px`;
+                    
+                    // Màu sắc ngẫu nhiên
+                    const colorIndex = Math.floor(Math.random() * colors.length);
+                    particle.style.background = colors[colorIndex];
+                    
+                    // Vị trí bắt đầu (phía trên bông tuyết, với độ lệch ngang)
+                    const startX = centerX - 30 + Math.random() * 60;
+                    const startY = centerY - 40;
+                    
+                    particle.style.left = `${startX}px`;
+                    particle.style.top = `${startY}px`;
+                    
+                    // Tạo hiệu ứng rơi với xoay
+                    const fallDistance = 80 + Math.random() * 120;
+                    const rotateAngle = 180 + Math.random() * 360;
+                    
+                    // Thiết lập CSS custom properties
+                    particle.style.setProperty('--fall-distance', `${fallDistance}px`);
+                    particle.style.setProperty('--rotate-angle', `${rotateAngle}deg`);
+                    
+                    // Animation rơi với thời gian khác nhau
+                    const fallDuration = 1 + Math.random() * 1.5;
+                    particle.style.animation = `particleFall ${fallDuration}s ease-in forwards`;
+                    
+                    // Thêm particle vào trang
+                    document.body.appendChild(particle);
+                    activeFallingParticles.push(particle);
+                    
+                    // Tự động xóa sau khi rơi xong
+                    setTimeout(() => {
+                        raf(() => {
+                            if (document.body.contains(particle)) {
+                                document.body.removeChild(particle);
+                                
+                                // Xóa khỏi mảng
+                                const particleIndex = activeFallingParticles.indexOf(particle);
+                                if (particleIndex > -1) {
+                                    activeFallingParticles.splice(particleIndex, 1);
+                                }
+                            }
+                        });
+                    }, fallDuration * 1000);
+                });
+            }
+        }
+
+        // Request Animation Frame
+        function raf(callback) {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            animationFrameId = requestAnimationFrame(callback);
         }
     </script>
 </body>
