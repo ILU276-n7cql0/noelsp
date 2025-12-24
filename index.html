@@ -2,32 +2,28 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>🎄 DearGift - Giáng Sinh Yêu Thương</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ============ RESET & BASE STYLES ============ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        :root {
-            --safe-area-inset-top: env(safe-area-inset-top);
-            --safe-area-inset-bottom: env(safe-area-inset-bottom);
         }
 
         html {
-            height: -webkit-fill-available;
-            overscroll-behavior: none;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c);
             min-height: 100vh;
             min-height: -webkit-fill-available;
@@ -35,260 +31,45 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            padding-top: calc(20px + var(--safe-area-inset-top, 0px));
-            padding-bottom: calc(20px + var(--safe-area-inset-bottom, 0px));
+            transition: all 1s ease;
             position: relative;
             overflow-x: hidden;
+            scroll-behavior: smooth;
             cursor: pointer;
         }
 
-        /* Các hạt động nhỏ ở nền */
-        .background-dots {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+        /* ============ SCROLLBAR STYLES ============ */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
-        .dot {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: floatDot 15s infinite linear;
-        }
-
-        @keyframes floatDot {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0.3;
-            }
-            25% {
-                transform: translateY(-10px) translateX(5px);
-                opacity: 0.5;
-            }
-            50% {
-                transform: translateY(-20px) translateX(-5px);
-                opacity: 0.7;
-            }
-            75% {
-                transform: translateY(-10px) translateX(5px);
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(0) translateX(0);
-                opacity: 0.3;
-            }
-        }
-
-        /* ===== CSS HIỆU ỨNG BÔNG TUYẾT NỔ ===== */
-        .snowflake-explosion-effect {
-            position: absolute;
-            pointer-events: none;
-            z-index: 10;
-            transform-origin: center;
-            filter: drop-shadow(0 0 2px rgba(30, 144, 255, 0.6));
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-        }
-
-        .snowflake-explosion-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            animation: rotate 6s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .snowflake-explosion-branch {
-            position: absolute;
-            background: linear-gradient(to right, #4682B4, #1E90FF, #4682B4);
-            border-radius: 0.5px;
-            box-shadow: 0 0 2px rgba(30, 144, 255, 0.7);
-            will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        .explosion-effect {
-            position: absolute;
-            pointer-events: none;
-            z-index: 20;
-            will-change: transform;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        .explosion-particle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1E90FF, #87CEEB, #FFFFFF);
-            box-shadow: 0 0 3px rgba(30, 144, 255, 0.6);
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        .falling-particle-effect {
-            position: absolute;
-            pointer-events: none;
-            z-index: 15;
-            border-radius: 50%;
-            background: linear-gradient(180deg, rgba(30, 144, 255, 0.9), rgba(255, 255, 255, 0.7));
-            box-shadow: 0 0 4px rgba(30, 144, 255, 0.5);
-            will-change: transform, opacity;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        @keyframes snowflakeAppear {
-            0% { 
-                opacity: 0;
-                transform: scale(0.15);
-            }
-            40% { 
-                opacity: 1;
-                transform: scale(1.05);
-            }
-            70% { 
-                transform: scale(0.98);
-            }
-            100% { 
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes snowflakeDisappear {
-            0% { 
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% { 
-                opacity: 0;
-                transform: scale(0.6);
-            }
-        }
-
-        @keyframes particleExplode {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--tx), var(--ty)) scale(0);
-            }
-        }
-
-        @keyframes particleFall {
-            0% {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(var(--fall-distance)) rotate(var(--rotate-angle));
-            }
-        }
-
-        .mute-toggle {
-            position: fixed;
-            top: max(20px, var(--safe-area-inset-top, 20px));
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2a9d8f, #2a623d);
-            color: white;
-            border: none;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .mute-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        .mute-toggle.muted {
-            background: linear-gradient(135deg, #e63946, #c41e3a);
-        }
-
-        .mute-toggle.muted i {
-            text-decoration: line-through;
-        }
-
-        .sound-status {
-            position: fixed;
-            top: calc(75px + var(--safe-area-inset-top, 0px));
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 5px 10px;
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 999;
-            pointer-events: none;
+            -webkit-border-radius: 10px;
         }
 
-        .mute-toggle:hover + .sound-status,
-        .sound-status:hover {
-            opacity: 1;
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #c41e3a, #ff6b6b);
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
         }
 
-        .click-effect {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(30, 144, 255, 0.8);
-            pointer-events: none;
-            z-index: 10000;
-            animation: ripple 0.6s linear;
-            transform: translate(-50%, -50%);
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ff6b6b, #c41e3a);
         }
 
-        @keyframes ripple {
-            0% {
-                width: 0;
-                height: 0;
-                opacity: 0.8;
-            }
-            100% {
-                width: 100px;
-                height: 100px;
-                opacity: 0;
-            }
-        }
-
-        /* Icon rơi - tăng lên 15 */
+        /* ============ FALLING ICONS (GIẢM 25 -> 15) ============ */
         .falling-icon {
             position: absolute;
             pointer-events: none;
             z-index: 1;
             font-size: 20px;
             animation: fall linear infinite;
-            opacity: 0.5;
+            opacity: 0.6;
+            will-change: transform;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -302,22 +83,24 @@
             }
         }
 
+        /* ============ CONTAINER ============ */
         .container {
             max-width: 500px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             border-radius: 25px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             padding: 25px;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             position: relative;
             z-index: 10;
             border: 3px solid #c41e3a;
-            transition: all 0.5s ease;
-            -webkit-overflow-scrolling: touch;
+            transition: all 0.3s ease;
         }
 
+        /* ============ SLIDES ============ */
         .slide {
             display: none;
             animation: fadeIn 0.5s ease;
@@ -336,12 +119,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ============ TYPOGRAPHY ============ */
         h1, h2 {
             color: #c41e3a;
             text-align: center;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            transition: color 0.3s ease;
         }
 
         h1 {
@@ -356,6 +139,7 @@
             font-size: 26px;
         }
 
+        /* ============ MESSAGE BOXES ============ */
         .message-box {
             background: linear-gradient(135deg, #fff5f7, #ffe8ec);
             border-radius: 20px;
@@ -363,8 +147,7 @@
             margin: 20px 0;
             border: 2px dashed #ff8ab5;
             text-align: center;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="%23c41e3a" fill-opacity="0.1" d="M10,0 L12,6 L18,6 L13,10 L15,16 L10,12 L5,16 L7,10 L2,6 L8,6 Z"/></svg>');
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
         }
 
         .simple-message {
@@ -376,7 +159,7 @@
             border-left: 5px solid #c41e3a;
             position: relative;
             overflow: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
         }
 
         p {
@@ -386,23 +169,17 @@
             font-size: 16px;
         }
 
-        .highlight-text {
-            font-size: 18px;
-            color: #c41e3a;
-            font-weight: 600;
-            margin: 20px 0;
-        }
-
+        /* ============ BUTTONS (TOUCH-FRIENDLY) ============ */
         button {
             background: linear-gradient(135deg, #c41e3a, #e63946);
             color: white;
             border: none;
-            padding: 16px 32px;
+            padding: 16px 24px;
             border-radius: 50px;
             font-size: 17px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: block;
             width: 100%;
             margin: 15px 0;
@@ -412,27 +189,17 @@
             gap: 10px;
             position: relative;
             overflow: hidden;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-appearance: none;
             touch-action: manipulation;
-        }
-
-        button:before {
-            content: "❄️";
-            position: absolute;
-            left: 10px;
-            opacity: 0.3;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.3);
+            min-height: 50px;
         }
 
         button:active {
-            transform: translateY(-1px);
+            transform: scale(0.98);
         }
 
-        textarea, input {
+        /* ============ INPUTS ============ */
+        textarea, input, select {
             width: 100%;
             padding: 16px;
             border: 2px solid #e0e0e0;
@@ -443,65 +210,51 @@
             transition: all 0.3s ease;
             background: white;
             -webkit-appearance: none;
-            appearance: none;
         }
 
-        textarea:focus, input:focus {
+        textarea:focus, input:focus, select:focus {
             outline: none;
             border-color: #c41e3a;
             box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
         }
 
-        textarea {
-            height: 120px;
-            resize: vertical;
-            min-height: 100px;
-            max-height: 200px;
-        }
-
-        .notification {
+        /* ============ CONTROL BUTTONS ============ */
+        .mute-toggle, .customization-toggle {
             position: fixed;
-            bottom: max(20px, var(--safe-area-inset-bottom, 20px));
-            right: 20px;
-            background: #333;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a9d8f, #2a623d);
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
             z-index: 1000;
-            max-width: 300px;
-            word-wrap: break-word;
+            box-shadow: 0 4px 12px rgba(42, 157, 143, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            -webkit-appearance: none;
+            touch-action: manipulation;
         }
 
-        .notification.show {
-            transform: translateY(0);
-            opacity: 1;
+        .mute-toggle {
+            top: 20px;
+            left: 20px;
         }
 
+        .customization-toggle {
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #c41e3a, #e63946);
+        }
+
+        /* ============ PROGRESS BAR ============ */
         .progress-bar {
             display: flex;
             justify-content: space-between;
             margin-bottom: 30px;
-            position: relative;
-        }
-
-        .progress-bar:before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            right: 30px;
-            height: 4px;
-            background: #e0e0e0;
-            z-index: 1;
-        }
-
-        .step {
-            text-align: center;
-            z-index: 2;
             position: relative;
         }
 
@@ -520,25 +273,13 @@
             transition: all 0.3s ease;
         }
 
-        .step.active .circle {
-            background: linear-gradient(135deg, #c41e3a, #e63946);
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.4);
-        }
-
-        .step .circle:after {
-            content: "🎁";
-            font-size: 14px;
-            position: absolute;
-            top: -5px;
-            right: -5px;
-        }
-
+        /* ============ ANIMATIONS ============ */
         .heart-animation {
-            font-size: 60px;
+            font-size: 50px;
             color: #c41e3a;
             margin: 20px 0;
             animation: heartbeat 1.5s infinite;
+            -webkit-animation: heartbeat 1.5s infinite;
         }
 
         @keyframes heartbeat {
@@ -546,285 +287,18 @@
             50% { transform: scale(1.1); }
         }
 
-        /* Christmas decorations */
-        .christmas-decoration {
-            position: absolute;
-            font-size: 20px;
-            z-index: 5;
-            animation: float 3s infinite ease-in-out;
-            pointer-events: none;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        /* ============ PANEL TÙY CHỈNH NÂNG CAO ============ */
-        .customization-panel {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            z-index: 100;
-            width: 320px;
-            backdrop-filter: blur(20px);
-            border: 2px solid #c41e3a;
-            display: none;
-            max-height: 80vh;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .customization-panel.active {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .customization-toggle {
-            position: fixed;
-            top: max(20px, var(--safe-area-inset-top, 20px));
-            right: 20px;
-            background: linear-gradient(135deg, #c41e3a, #e63946);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 99;
-            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .customization-toggle:hover {
-            transform: scale(1.1) rotate(15deg);
-        }
-
-        .customization-toggle:before {
-            content: "🎨";
-            position: absolute;
-            font-size: 12px;
-            top: -5px;
-            right: -5px;
-        }
-
-        .customization-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .customization-header h3 {
-            color: #c41e3a;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-        }
-
-        .close-panel {
-            background: none;
-            border: none;
-            color: #666;
-            font-size: 20px;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .close-panel:hover {
-            color: #c41e3a;
-            transform: rotate(90deg);
-        }
-
-        .background-tabs {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .background-tab {
-            flex: 1;
-            padding: 8px 5px;
-            text-align: center;
-            background: #f0f0f0;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .background-tab:hover {
-            background: #e0e0e0;
-        }
-
-        .background-tab.active {
-            background: #c41e3a;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .background-section {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .background-section.active {
-            display: block;
-        }
-
-        .background-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin: 12px 0;
-        }
-
-        .bg-option {
-            height: 60px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .bg-option:hover {
-            transform: scale(1.05);
-        }
-
-        .bg-option.active {
-            border-color: #c41e3a;
-            box-shadow: 0 0 8px rgba(196, 30, 58, 0.5);
-        }
-
-        .bg-option:after {
-            content: attr(data-name);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            font-size: 8px;
-            padding: 2px;
-            text-align: center;
-        }
-
-        .color-picker-container {
-            margin: 12px 0;
-        }
-
-        .color-picker-label {
-            display: block;
-            margin-bottom: 6px;
-            color: #c41e3a;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .color-picker {
-            width: 100%;
-            height: 35px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            padding: 0;
-            background: transparent;
-        }
-
-        /* Music Controls */
-        .music-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 12px 0;
-        }
-
-        .music-btn {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: #c41e3a;
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-            transition: all 0.3s ease;
-        }
-
-        .music-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .volume-slider {
-            flex: 1;
-            height: 4px;
-            -webkit-appearance: none;
-            background: #ddd;
-            border-radius: 4px;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            background: #c41e3a;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .music-info {
-            font-size: 13px;
-            color: #666;
-            text-align: center;
-            margin-top: 10px;
-            padding: 8px;
-            background: #f9f9f9;
-            border-radius: 8px;
-        }
-
-        /* Tối ưu cho mobile */
-        @media (max-width: 600px) {
+        /* ============ MEDIA QUERIES (iOS OPTIMIZED) ============ */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+            
             .container {
                 padding: 20px;
                 border-radius: 20px;
-                margin: 10px;
+                max-height: 85vh;
             }
             
             h1 {
@@ -835,144 +309,130 @@
                 font-size: 24px;
             }
             
-            .heart-animation {
-                font-size: 50px;
-            }
-            
-            .mute-toggle {
-                top: max(10px, var(--safe-area-inset-top, 10px));
-                left: 10px;
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
-            
-            .sound-status {
-                top: calc(60px + var(--safe-area-inset-top, 0px));
-                left: 10px;
-            }
-            
-            .notification {
-                right: 10px;
-                left: 10px;
-                max-width: calc(100% - 20px);
-            }
-            
             button {
                 padding: 14px 20px;
                 font-size: 16px;
             }
             
-            .customization-panel {
-                width: calc(100% - 40px);
-                right: 20px;
-                left: 20px;
-                top: max(20px, var(--safe-area-inset-top, 20px));
-                max-height: 70vh;
+            .mute-toggle, .customization-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .mute-toggle {
+                top: 10px;
+                left: 10px;
             }
             
             .customization-toggle {
-                top: max(70px, calc(45px + var(--safe-area-inset-top, 45px)));
+                top: 10px;
                 right: 10px;
+            }
+            
+            /* Tăng kích thước touch target cho mobile */
+            button, input[type="button"], input[type="submit"] {
+                min-height: 44px; /* Apple's recommended minimum touch target */
             }
         }
 
-        /* Background themes */
-        .bg-noel-1 { background: linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c); }
-        .bg-noel-2 { background: linear-gradient(135deg, #c41e3a, #e63946, #ff6b6b); }
-        .bg-noel-3 { background: linear-gradient(135deg, #1e3c72, #2a5298, #4a6491); }
-        .bg-noel-4 { background: linear-gradient(135deg, #2d1b69, #3d28a3, #6a5acd); }
-        .bg-noel-5 { background: linear-gradient(135deg, #0f4c5c, #1b6b73, #2a9d8f); }
-        .bg-noel-6 { background: linear-gradient(135deg, #5a189a, #7b2cbf, #9d4edd); }
-
-        /* Border colors */
-        .border-red { border-color: #c41e3a !important; }
-        .border-green { border-color: #2a9d8f !important; }
-        .border-blue { border-color: #1e3c72 !important; }
-        .border-purple { border-color: #5a189a !important; }
-        .border-gold { border-color: #ff9e00 !important; }
-        .border-pink { border-color: #ff6b6b !important; }
-
-        /* Tối ưu cho iPhone notch */
-        @supports (padding: max(0px)) {
-            body {
-                padding-top: max(20px, var(--safe-area-inset-top, 20px));
-                padding-bottom: max(20px, var(--safe-area-inset-bottom, 20px));
+        /* ============ iOS SAFARI FIXES ============ */
+        @supports (-webkit-touch-callout: none) {
+            .container {
+                background: rgba(255, 255, 255, 0.95); /* Giảm độ mờ cho iOS */
             }
+            
+            body {
+                min-height: -webkit-fill-available;
+            }
+        }
+
+        /* ============ DECORATIONS ============ */
+        .christmas-decoration {
+            position: absolute;
+            font-size: 18px;
+            z-index: 5;
+            animation: float 3s infinite ease-in-out;
+            pointer-events: none;
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* ============ NOTIFICATION ============ */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ============ SCROLL BUTTONS ============ */
+        .scroll-top-btn, .scroll-bottom-btn {
+            position: fixed;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #c41e3a, #e63946);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 99;
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-appearance: none;
+            touch-action: manipulation;
+        }
+
+        .scroll-top-btn.show, .scroll-bottom-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top-btn {
+            bottom: 80px;
+            right: 20px;
+        }
+
+        .scroll-bottom-btn {
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2a9d8f, #2a623d);
         }
     </style>
 </head>
 <body>
-    <!-- Nền hạt động -->
-    <div class="background-dots" id="backgroundDots"></div>
-
     <!-- Nút Mute/Unmute -->
     <button class="mute-toggle" id="muteToggle">
         <i class="fas fa-volume-up"></i>
     </button>
-    <div class="sound-status" id="soundStatus">Âm thanh: Bật</div>
 
     <!-- Customization Toggle Button -->
     <div class="customization-toggle" id="customizationToggle">
         <i class="fas fa-palette"></i>
-    </div>
-
-    <!-- Customization Panel -->
-    <div class="customization-panel" id="customizationPanel">
-        <div class="customization-header">
-            <h3><i class="fas fa-magic"></i> Tùy chỉnh</h3>
-            <button class="close-panel" id="closePanel">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <!-- Tabs cho các loại nền -->
-        <div class="background-tabs">
-            <button class="background-tab active" data-tab="page">Nền trang</button>
-            <button class="background-tab" data-tab="border">Màu viền</button>
-        </div>
-
-        <!-- ===== NỀN TRANG ===== -->
-        <div class="background-section active" id="pageBackgroundSection">
-            <h4><i class="fas fa-image"></i> Nền trang chính</h4>
-            <div class="background-options">
-                <div class="bg-option bg-noel-1 active" data-name="Noel Xanh" data-class="bg-noel-1" data-style="linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c)"></div>
-                <div class="bg-option bg-noel-2" data-name="Noel Đỏ" data-class="bg-noel-2" data-style="linear-gradient(135deg, #c41e3a, #e63946, #ff6b6b)"></div>
-                <div class="bg-option bg-noel-3" data-name="Đêm Noel" data-class="bg-noel-3" data-style="linear-gradient(135deg, #1e3c72, #2a5298, #4a6491)"></div>
-                <div class="bg-option bg-noel-4" data-name="Tím Mộng Mơ" data-class="bg-noel-4" data-style="linear-gradient(135deg, #2d1b69, #3d28a3, #6a5acd)"></div>
-                <div class="bg-option bg-noel-5" data-name="Xanh Ngọc" data-class="bg-noel-5" data-style="linear-gradient(135deg, #0f4c5c, #1b6b73, #2a9d8f)"></div>
-                <div class="bg-option bg-noel-6" data-name="Tím Đam Mê" data-class="bg-noel-6" data-style="linear-gradient(135deg, #5a189a, #7b2cbf, #9d4edd)"></div>
-            </div>
-        </div>
-
-        <!-- ===== NỀN VIỀN ===== -->
-        <div class="background-section" id="borderBackgroundSection">
-            <h4><i class="fas fa-square"></i> Màu viền container</h4>
-            <div class="background-options">
-                <div class="bg-option" style="background: #c41e3a;" data-name="Đỏ Noel" data-class="border-red" data-color="#c41e3a"></div>
-                <div class="bg-option" style="background: #2a9d8f;" data-name="Xanh Ngọc" data-class="border-green" data-color="#2a9d8f"></div>
-                <div class="bg-option" style="background: #1e3c72;" data-name="Xanh Dương" data-class="border-blue" data-color="#1e3c72"></div>
-                <div class="bg-option" style="background: #5a189a;" data-name="Tím Đậm" data-class="border-purple" data-color="#5a189a"></div>
-                <div class="bg-option" style="background: #ff9e00;" data-name="Vàng Kim" data-class="border-gold" data-color="#ff9e00"></div>
-                <div class="bg-option" style="background: #ff6b6b;" data-name="Hồng Đào" data-class="border-pink" data-color="#ff6b6b"></div>
-            </div>
-        </div>
-
-        <!-- Music Controls -->
-        <div class="music-controls">
-            <button class="music-btn" id="playPauseBtn">
-                <i class="fas fa-play" id="playPauseIcon"></i>
-            </button>
-            <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
-            <button class="music-btn" id="stopMusicBtn">
-                <i class="fas fa-stop"></i>
-            </button>
-        </div>
-
-        <div class="music-info">
-            <p><i class="fas fa-music"></i> <span id="currentSong">Nhạc Giáng Sinh</span></p>
-            <p><i class="fas fa-volume-up"></i> Âm lượng: <span id="volumeValue">50%</span></p>
-        </div>
     </div>
 
     <!-- Vùng cho icon Noel rơi tự do -->
@@ -981,8 +441,16 @@
     <!-- Christmas Decorations -->
     <div id="decorations"></div>
 
-    <!-- Video Element cho nhạc -->
-    <video id="bgMusic" loop style="display: none;"></video>
+    <!-- Scroll buttons -->
+    <div class="scroll-top-btn" id="scrollTopBtn">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    <div class="scroll-bottom-btn" id="scrollBottomBtn">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <!-- Video Element -->
+    <video id="bgMusic" loop playsinline webkit-playsinline style="display: none;"></video>
 
     <div class="container" id="mainContainer">
         <!-- Progress Bar -->
@@ -1017,23 +485,8 @@
                     </p>
                 </div>
 
-                <div style="text-align: center; margin: 20px 0;">
-                    <div style="display: inline-flex; gap: 15px; font-size: 24px;">
-                        <span>🎄</span>
-                        <span>❄️</span>
-                        <span>🎁</span>
-                        <span>🌟</span>
-                        <span>🦌</span>
-                    </div>
-                </div>
-
-                <p style="text-align: center; color: #666;">
-                    <i class="fas fa-info-circle"></i>
-                    Câu trả lời của bạn sẽ là món quà Giáng Sinh đẹp nhất
-                </p>
-
                 <button id="nextSlideBtn">
-                    <i class="fas fa-gift"></i> Mở quà ngay <i class="fas fa-arrow-right"></i>
+                    <i class="fas fa-gift"></i> Mở quà ngay
                 </button>
             </div>
         </div>
@@ -1047,13 +500,10 @@
                     <p style="font-size: 18px; font-weight: 600; color: #c41e3a; line-height: 1.5;">
                         "Trước đây có lẽ chỉ vài lời vu vơ với nhau, nhưng ở đây tớ muốn hỏi cậu là liệu cậu có thể để mình được chính thức ở bên cậu và trở thành người yêu của cậu được không?" 💘
                     </p>
-                    <p style="margin-top: 15px; font-style: italic; color: #666;">
-                        🎄 Đây là món quà Noel đặc biệt nhất...
-                    </p>
                 </div>
 
                 <div style="margin: 20px 0;">
-                    <textarea id="userResponse" placeholder="Hãy viết câu trả lời của cậu ở đây..." maxlength="500" style="height: 150px;"></textarea>
+                    <textarea id="userResponse" placeholder="Hãy viết câu trả lời của cậu ở đây..." maxlength="500" style="height: 120px;"></textarea>
                     <p style="font-size: 12px; color: #888; text-align: right; margin-top: 5px;">
                         <span id="charCount">0</span>/500 ký tự
                     </p>
@@ -1061,19 +511,9 @@
                 
                 <input type="text" id="userName" placeholder="Nhập tên/biệt danh của bạn 🎁" required>
 
-                <div style="text-align: center; margin: 10px 0;">
-                    <p style="font-size: 12px; color: #888;">
-                        <i class="fas fa-snowman"></i> Câu trả lời sẽ được gửi đến tớ
-                    </p>
-                </div>
-
                 <button id="submitBtn">
                     <i class="fas fa-paper-plane"></i> Gửi câu trả lời
                 </button>
-
-                <p style="text-align: center; color: #666; font-size: 14px; margin-top: 15px;">
-                    <i class="fas fa-lock"></i> Tin nhắn được gửi an toàn qua Telegram
-                </p>
             </div>
         </div>
 
@@ -1093,25 +533,6 @@
                     <p class="final-message">
                         Tớ đã nhận món quà lớn nhất của Noel này rồi, chúc cậu có 1 ngày Noel thật vui vẻ, hạnh phúc nha. Tớ có một bất ngờ đã tới nhà cậu rồi đó.
                     </p>
-                    
-                    <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px; font-size: 24px;">
-                        <span>🎅</span>
-                        <span>🦌</span>
-                        <span>🎄</span>
-                        <span>🌟</span>
-                        <span>🎁</span>
-                    </div>
-                </div>
-
-                <div class="reply-section">
-                    <h3 style="font-size: 18px; color: #555; text-align: center; margin-bottom: 15px;">
-                        <i class="fas fa-reply"></i> Nếu cậu còn lời với tớ có thể điền ở đây và bấm gửi hoặc nhắn cho tớ
-                    </h3>
-                    <textarea id="replyMessage" placeholder="Viết lời nhắn cho tớ..."></textarea>
-                    
-                    <button id="sendReplyBtn">
-                        <i class="fas fa-share"></i> Gửi lời nhắn
-                    </button>
                 </div>
 
                 <div class="final-actions" style="margin-top: 30px;">
@@ -1130,50 +551,33 @@
     <div class="notification" id="notification"></div>
 
     <script>
-        // ============ CẤU HÌNH TELEGRAM ============
+        // ============ CẤU HÌNH ============
         const TELEGRAM_CONFIG = {
             botToken: "8503904022:AAElyplbto709iklzz6qRTAhnszWjMj_-1Q",
             chatId: "5787223699",
             enabled: true
         };
 
+        const ADMIN_CODE = "namlc1213";
+
         // ============ BIẾN TOÀN CỤC ============
         let currentSlide = 1;
-        let isMuted = false;
         let isVideoPlaying = false;
-        let lastClickTime = 0;
-        let animationFrameId = null;
-        let activeSnowflakes = [];
-        let activeExplosions = [];
-        let activeFallingParticles = [];
-        let lastClickPosition = { x: 0, y: 0 };
-        
-        // Settings storage
-        let currentSettings = {
-            pageBackground: 'bg-noel-1',
-            pageBackgroundStyle: 'linear-gradient(135deg, #1a472a, #2a623d, #5d9b6c)',
-            borderColor: 'border-red',
-            borderColorValue: '#c41e3a'
-        };
+        let isMuted = false;
+        let isAdmin = false;
 
         // ============ KHỞI TẠO TRANG ============
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🎄 Website Noel đã sẵn sàng!');
             
-            // Tạo các hạt động ở nền
-            createBackgroundDots();
-            
-            // Tạo icon Noel rơi (15 icon)
+            // Tạo icon Noel rơi tự do (GIẢM từ 25 xuống 15)
             createFallingIcons();
             
             // Tạo trang trí Noel
             createChristmasDecorations();
             
-            // Khởi tạo nhạc
-            initMusic();
-            
-            // Load settings
-            loadSettings();
+            // Khởi tạo video
+            initVideo();
             
             // Thiết lập sự kiện
             setupEventListeners();
@@ -1185,6 +589,156 @@
             userResponse.addEventListener('input', function() {
                 charCount.textContent = this.value.length;
             });
+            
+            // Tự động phát video sau 1 giây
+            setTimeout(tryAutoPlay, 1000);
+        });
+
+        // ===== TẠO ICON NOEL RƠI TỰ DO (15 ICON) =====
+        function createFallingIcons() {
+            const icons = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔', '⛄', '✨'];
+            const container = document.getElementById('falling-icons');
+            
+            // Tạo 15 icon rơi (giảm từ 25)
+            for (let i = 0; i < 15; i++) {
+                const icon = document.createElement('div');
+                icon.className = 'falling-icon';
+                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+                
+                // Kích thước ngẫu nhiên
+                const size = 15 + Math.random() * 20;
+                icon.style.fontSize = `${size}px`;
+                
+                // Vị trí bắt đầu ngẫu nhiên
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.top = -50 + 'px';
+                
+                // TĂNG thời gian rơi từ 2 lên 3.5-8.5 giây
+                const duration = 3.5 + Math.random() * 5;
+                icon.style.animationDuration = `${duration}s`;
+                
+                // Độ trễ ngẫu nhiên
+                const delay = Math.random() * 5;
+                icon.style.animationDelay = `${delay}s`;
+                
+                // Độ mờ
+                icon.style.opacity = 0.3 + Math.random() * 0.4;
+                
+                container.appendChild(icon);
+                
+                // Tự động xóa và tạo lại icon khi rơi xong
+                setTimeout(() => {
+                    if (icon.parentNode) {
+                        icon.parentNode.removeChild(icon);
+                    }
+                }, (duration + delay) * 1000);
+            }
+            
+            // Tiếp tục tạo icon mới sau 3.5 giây
+            setTimeout(createFallingIcons, 3500);
+        }
+
+        // ===== TRANG TRÍ NOEL =====
+        function createChristmasDecorations() {
+            const decorationsContainer = document.getElementById('decorations');
+            const emojis = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅'];
+            
+            for (let i = 0; i < 10; i++) {
+                const decoration = document.createElement('div');
+                decoration.className = 'christmas-decoration';
+                decoration.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                decoration.style.left = Math.random() * 100 + '%';
+                decoration.style.top = Math.random() * 100 + '%';
+                decoration.style.fontSize = (Math.random() * 15 + 12) + 'px';
+                decoration.style.opacity = Math.random() * 0.2 + 0.1;
+                decoration.style.animationDuration = Math.random() * 4 + 3 + 's';
+                decoration.style.animationDelay = Math.random() * 5 + 's';
+                decorationsContainer.appendChild(decoration);
+            }
+        }
+
+        // ===== HỆ THỐNG VIDEO =====
+        function initVideo() {
+            const bgVideo = document.getElementById('bgMusic');
+            
+            // Sử dụng video từ GitHub với fallback
+            const videoURLs = [
+                "https://raw.githubusercontent.com/hahahnoob181-ctrl/-dasdasd/main/Noel.mp4",
+                "https://cdn.jsdelivr.net/gh/hahahnoob181-ctrl/-dasdasd@main/Noel.mp4"
+            ];
+            
+            console.log("🎥 Đang tải video Noel...");
+            
+            bgVideo.src = videoURLs[0];
+            bgVideo.volume = 0.7;
+            bgVideo.loop = true;
+            bgVideo.preload = "auto";
+            bgVideo.playsInline = true;
+            bgVideo.webkitPlaysInline = true;
+            
+            // Fallback nếu link đầu không hoạt động
+            bgVideo.addEventListener('error', function() {
+                console.log("🔄 Thử link backup...");
+                bgVideo.src = videoURLs[1];
+            });
+            
+            bgVideo.addEventListener('canplay', function() {
+                console.log("✅ Video đã sẵn sàng");
+            });
+        }
+
+        // ===== TỰ ĐỘNG PHÁT VIDEO (iOS FRIENDLY) =====
+        function tryAutoPlay() {
+            const bgVideo = document.getElementById('bgMusic');
+            
+            if (!isVideoPlaying && !isMuted && bgVideo.readyState >= 2) {
+                const playPromise = bgVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("🎉 Video đang phát!");
+                        isVideoPlaying = true;
+                    }).catch(error => {
+                        console.log("🖱️ Chờ user tương tác để phát video...");
+                        // Hiển thị thông báo yêu cầu user tap
+                        showNotification("👆 Chạm vào màn hình để phát nhạc Noel", "info");
+                    });
+                }
+            }
+        }
+
+        // ===== THIẾT LẬP EVENT LISTENERS =====
+        function setupEventListeners() {
+            // Nút mute
+            document.getElementById('muteToggle').addEventListener('click', toggleMute);
+            
+            // Các nút chức năng chính
+            document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
+            document.getElementById('submitBtn').addEventListener('click', submitResponse);
+            document.getElementById('shareLinkBtn').addEventListener('click', shareLink);
+            
+            // Scroll buttons
+            document.getElementById('scrollTopBtn').addEventListener('click', scrollToTop);
+            document.getElementById('scrollBottomBtn').addEventListener('click', scrollToBottom);
+            
+            // Customization toggle
+            document.getElementById('customizationToggle').addEventListener('click', function() {
+                showNotification("🎨 Tính năng tùy chỉnh đang phát triển!", "info");
+            });
+            
+            // Check admin access
+            document.getElementById('userName').addEventListener('input', checkAdminAccess);
+            
+            // Scroll visibility
+            window.addEventListener('scroll', updateScrollButtons);
+            updateScrollButtons();
+            
+            // Tap to play video trên iOS
+            document.body.addEventListener('touchstart', function() {
+                if (!isVideoPlaying) {
+                    tryAutoPlay();
+                }
+            }, { passive: true });
             
             // Focus vào ô tên khi vào slide 2
             const observer = new MutationObserver(function(mutations) {
@@ -1201,667 +755,44 @@
                 attributes: true,
                 attributeFilter: ['class']
             });
-            
-            // Tự động phát nhạc sau 1 giây
-            setTimeout(() => {
-                tryAutoPlay();
-            }, 1000);
-            
-            // Preload các hiệu ứng
-            preloadEffects();
-        });
-
-        // ===== TẠO CÁC HẠT ĐỘNG Ở NỀN =====
-        function createBackgroundDots() {
-            const container = document.getElementById('backgroundDots');
-            const dotCount = 30; // Số lượng hạt
-            
-            for (let i = 0; i < dotCount; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot';
-                
-                // Vị trí ngẫu nhiên
-                dot.style.left = Math.random() * 100 + '%';
-                dot.style.top = Math.random() * 100 + '%';
-                
-                // Kích thước ngẫu nhiên
-                const size = 1 + Math.random() * 2;
-                dot.style.width = size + 'px';
-                dot.style.height = size + 'px';
-                
-                // Độ mờ ngẫu nhiên
-                dot.style.opacity = 0.2 + Math.random() * 0.3;
-                
-                // Tốc độ animation ngẫu nhiên
-                const duration = 10 + Math.random() * 20;
-                const delay = Math.random() * 5;
-                dot.style.animationDuration = duration + 's';
-                dot.style.animationDelay = delay + 's';
-                
-                container.appendChild(dot);
-            }
         }
 
-        // ===== TẠO ICON NOEL RƠI (15 ICON) =====
-        function createFallingIcons() {
-            const icons = ['🎄', '🎁', '🌟', '❄️', '🦌', '🎅', '🤶', '🔔'];
-            const container = document.getElementById('falling-icons');
-            
-            // Tạo 15 icon (tăng từ 10 lên 15)
-            for (let i = 0; i < 15; i++) {
-                const icon = document.createElement('div');
-                icon.className = 'falling-icon';
-                icon.textContent = icons[Math.floor(Math.random() * icons.length)];
-                
-                // Kích thước
-                const size = 12 + Math.random() * 20;
-                icon.style.fontSize = `${size}px`;
-                
-                // Vị trí bắt đầu ngẫu nhiên
-                icon.style.left = Math.random() * 100 + '%';
-                icon.style.top = -50 + 'px';
-                
-                // Tốc độ rơi
-                const duration = 8 + Math.random() * 20;
-                icon.style.animationDuration = `${duration}s`;
-                
-                // Độ trễ ngẫu nhiên
-                const delay = Math.random() * 15;
-                icon.style.animationDelay = `${delay}s`;
-                
-                // Độ mờ
-                icon.style.opacity = 0.2 + Math.random() * 0.3;
-                
-                container.appendChild(icon);
-                
-                // Tự động xóa sau khi rơi xong
-                setTimeout(() => {
-                    if (icon.parentNode) {
-                        icon.parentNode.removeChild(icon);
-                    }
-                }, (duration + delay) * 1000);
-            }
-            
-            // Tạo icon mới mỗi 3 giây (giảm từ 4 xuống 3)
-            setTimeout(createFallingIcons, 3000);
-        }
-
-        // ===== TRANG TRÍ NOEL =====
-        function createChristmasDecorations() {
-            const decorationsContainer = document.getElementById('decorations');
-            const emojis = ['🎄', '🎁', '🌟', '❄️', '🦌'];
-            
-            for (let i = 0; i < 8; i++) {
-                const decoration = document.createElement('div');
-                decoration.className = 'christmas-decoration';
-                decoration.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                decoration.style.left = Math.random() * 100 + '%';
-                decoration.style.top = Math.random() * 100 + '%';
-                decoration.style.fontSize = (Math.random() * 15 + 10) + 'px';
-                decoration.style.opacity = Math.random() * 0.2 + 0.1;
-                decoration.style.animationDuration = Math.random() * 5 + 4 + 's';
-                decoration.style.animationDelay = Math.random() * 8 + 's';
-                decorationsContainer.appendChild(decoration);
-            }
-        }
-
-        // ===== KHỞI TẠO NHẠC =====
-        function initMusic() {
-            const bgVideo = document.getElementById('bgMusic');
-            const playPauseIcon = document.getElementById('playPauseIcon');
-            const currentSongElement = document.getElementById('currentSong');
-            
-            // Sử dụng nhạc Noel từ các nguồn khác nhau
-            const musicURLs = [
-                "https://assets.mixkit.co/music/preview/mixkit-christmas-is-coming-1206.mp3",
-                "https://assets.mixkit.co/music/preview/mixkit-sleigh-bells-1198.mp3",
-                "https://assets.mixkit.co/music/preview/mixkit-jingle-bells-112.mp3"
-            ];
-            
-            console.log("🎵 Đang tải nhạc Noel...");
-            
-            // Chọn URL ngẫu nhiên
-            const musicURL = musicURLs[Math.floor(Math.random() * musicURLs.length)];
-            
-            bgVideo.src = musicURL;
-            bgVideo.volume = 0.5;
-            bgVideo.loop = true;
-            bgVideo.preload = "auto";
-            
-            // Hiển thị tên bài hát
-            currentSongElement.textContent = "Nhạc Giáng Sinh Vui Nhộn";
-            
-            // Sự kiện khi nhạc có thể phát
-            bgVideo.addEventListener('canplay', function() {
-                console.log("✅ Nhạc đã sẵn sàng:", musicURL);
-            }, { once: true });
-            
-            // Sự kiện khi nhạc phát
-            bgVideo.addEventListener('play', function() {
-                console.log("▶️ ĐANG PHÁT NHẠC");
-                isVideoPlaying = true;
-                playPauseIcon.className = 'fas fa-pause';
-            });
-            
-            // Sự kiện khi nhạc tạm dừng
-            bgVideo.addEventListener('pause', function() {
-                console.log("⏸️ ĐÃ TẠM DỪNG NHẠC");
-                isVideoPlaying = false;
-                playPauseIcon.className = 'fas fa-play';
-            });
-            
-            // Xử lý lỗi
-            bgVideo.addEventListener('error', function(e) {
-                console.error("❌ Lỗi khi tải nhạc:", bgVideo.error);
-                currentSongElement.textContent = "Nhạc Giáng Sinh (Dự phòng)";
-            });
-        }
-
-        // ===== TỰ ĐỘNG PHÁT NHẠC =====
-        function tryAutoPlay() {
-            const bgVideo = document.getElementById('bgMusic');
-            
-            if (!isVideoPlaying && !isMuted) {
-                const playPromise = bgVideo.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        console.log("🎉 TỰ ĐỘNG PHÁT NHẠC THÀNH CÔNG!");
-                    }).catch(error => {
-                        console.log("🖱️ Chờ user click để phát nhạc...", error);
-                        showNotification("👆 Nhấn vào trang để phát nhạc Noel", "info");
-                    });
-                }
-            }
-        }
-
-        function toggleMusic() {
-            const bgVideo = document.getElementById('bgMusic');
-            const playPauseIcon = document.getElementById('playPauseIcon');
-            
-            if (isVideoPlaying) {
-                bgVideo.pause();
-                showNotification("⏸️ Nhạc đã tạm dừng", "info");
-            } else {
-                const playPromise = bgVideo.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        showNotification("▶️ Nhạc đang phát", "success");
-                    }).catch(error => {
-                        console.error("❌ Lỗi khi phát nhạc:", error);
-                        showNotification("🔄 Đang thử lại...", "warning");
-                    });
-                }
-            }
-        }
-
-        function stopMusic() {
-            const bgVideo = document.getElementById('bgMusic');
-            bgVideo.pause();
-            bgVideo.currentTime = 0;
-            document.getElementById('playPauseIcon').className = 'fas fa-play';
-            isVideoPlaying = false;
-            showNotification("⏹️ Đã dừng nhạc", "info");
-        }
-
-        function changeVolume(value) {
-            const bgVideo = document.getElementById('bgMusic');
-            bgVideo.volume = value / 100;
-            document.getElementById('volumeValue').textContent = value + '%';
-        }
-
+        // ===== TOGGLE MUTE =====
         function toggleMute() {
             const bgVideo = document.getElementById('bgMusic');
             const muteBtn = document.getElementById('muteToggle');
-            const soundStatus = document.getElementById('soundStatus');
             
             isMuted = !isMuted;
             bgVideo.muted = isMuted;
             
             if (isMuted) {
-                muteBtn.classList.add('muted');
                 muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                soundStatus.textContent = 'Âm thanh: Tắt';
                 showNotification('🔇 Âm thanh đã tắt', 'info');
             } else {
-                muteBtn.classList.remove('muted');
                 muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                soundStatus.textContent = 'Âm thanh: Bật';
                 showNotification('🔊 Âm thanh đã bật', 'success');
                 
-                // Tự động phát lại khi bật âm thanh
+                // Thử phát lại khi unmute
                 if (!isVideoPlaying) {
                     tryAutoPlay();
                 }
             }
         }
 
-        // ===== THIẾT LẬP EVENT LISTENERS =====
-        function setupEventListeners() {
-            // Nút mute
-            document.getElementById('muteToggle').addEventListener('click', function(e) {
-                toggleMute();
-                e.stopPropagation();
-            });
-
-            // Music controls
-            document.getElementById('playPauseBtn').addEventListener('click', function(e) {
-                toggleMusic();
-                e.stopPropagation();
-            });
-
-            document.getElementById('stopMusicBtn').addEventListener('click', function(e) {
-                stopMusic();
-                e.stopPropagation();
-            });
-
-            document.getElementById('volumeSlider').addEventListener('input', function(e) {
-                changeVolume(this.value);
-                e.stopPropagation();
-            });
-
-            // Các nút chức năng
-            document.getElementById('nextSlideBtn').addEventListener('click', function(e) {
-                nextSlide();
-            });
-
-            document.getElementById('submitBtn').addEventListener('click', function(e) {
-                submitResponse();
-            });
-
-            document.getElementById('sendReplyBtn').addEventListener('click', function(e) {
-                sendReply();
-            });
-
-            document.getElementById('shareLinkBtn').addEventListener('click', function(e) {
-                shareLink();
-            });
-
-            // Customization panel
-            document.getElementById('customizationToggle').addEventListener('click', function(e) {
-                toggleCustomizationPanel();
-                e.stopPropagation();
-            });
-
-            document.getElementById('closePanel').addEventListener('click', function(e) {
-                toggleCustomizationPanel();
-                e.stopPropagation();
-            });
-
-            // Các nút trong customization panel
-            document.querySelectorAll('.background-tab').forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    switchBackgroundTab(this.dataset.tab);
-                    e.stopPropagation();
-                });
-            });
-
-            document.querySelectorAll('.bg-option').forEach(opt => {
-                opt.addEventListener('click', function(e) {
-                    if (this.closest('#pageBackgroundSection')) {
-                        changePageBackground(this.dataset.class, this.dataset.style);
-                    } else if (this.closest('#borderBackgroundSection')) {
-                        changeBorderColor(this.dataset.class, this.dataset.color);
-                    }
-                    e.stopPropagation();
-                });
-            });
-
-            // Sự kiện click/tap toàn trang
-            document.body.addEventListener('click', handleBodyClick);
-            document.body.addEventListener('touchstart', handleBodyClick, { passive: true });
-        }
-
-        // ===== XỬ LÝ CLICK/TAP =====
-        function handleBodyClick(event) {
-            const currentTime = Date.now();
-            
-            // Lưu vị trí click
-            const clientX = event.clientX || (event.touches && event.touches[0].clientX) || window.innerWidth / 2;
-            const clientY = event.clientY || (event.touches && event.touches[0].clientY) || window.innerHeight / 2;
-            
-            lastClickPosition.x = clientX;
-            lastClickPosition.y = clientY;
-            
-            // Tạo hiệu ứng click
-            createClickEffect(clientX, clientY);
-            
-            // Kiểm tra thời gian giữa các click
-            if (currentTime - lastClickTime > 300) {
-                createSnowflake();
+        // ===== ĐIỀU HƯỚNG SLIDE =====
+        function nextSlide() {
+            if (currentSlide < 3) {
+                document.getElementById(`slide${currentSlide}`).classList.remove('active');
+                document.querySelector(`.step[data-step="${currentSlide}"]`).classList.remove('active');
+                
+                currentSlide++;
+                
+                document.getElementById(`slide${currentSlide}`).classList.add('active');
+                document.querySelector(`.step[data-step="${currentSlide}"]`).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                updateScrollButtons();
             }
-            
-            lastClickTime = currentTime;
-            
-            // Thử phát nhạc nếu chưa phát
-            if (!window.musicPlayed) {
-                window.musicPlayed = true;
-                tryAutoPlay();
-            }
-        }
-
-        function createClickEffect(x, y) {
-            raf(() => {
-                const effect = document.createElement('div');
-                effect.className = 'click-effect';
-                effect.style.left = x + 'px';
-                effect.style.top = y + 'px';
-                document.body.appendChild(effect);
-                
-                setTimeout(() => {
-                    if (effect.parentNode) {
-                        effect.parentNode.removeChild(effect);
-                    }
-                }, 600);
-            });
-        }
-
-        // ===== HIỆU ỨNG BÔNG TUYẾT NỔ =====
-        function createSnowflake() {
-            raf(() => {
-                const snowflakeSize = 40;
-                
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake-explosion-effect';
-                
-                snowflake.style.width = `${snowflakeSize}px`;
-                snowflake.style.height = `${snowflakeSize}px`;
-                snowflake.style.left = `${lastClickPosition.x - snowflakeSize/2}px`;
-                snowflake.style.top = `${lastClickPosition.y - snowflakeSize/2}px`;
-                
-                const snowflakeInner = document.createElement('div');
-                snowflakeInner.className = 'snowflake-explosion-inner';
-                snowflake.appendChild(snowflakeInner);
-                
-                const branchCount = 6;
-                const branchLength = snowflakeSize * 0.35;
-                
-                for (let i = 0; i < branchCount; i++) {
-                    const angle = (i * 60);
-                    
-                    const mainBranch = document.createElement('div');
-                    mainBranch.className = 'snowflake-explosion-branch';
-                    
-                    mainBranch.style.width = `${branchLength}px`;
-                    mainBranch.style.height = '1px';
-                    mainBranch.style.left = `${snowflakeSize/2 - 0.5}px`;
-                    mainBranch.style.top = `${snowflakeSize/2 - 0.5}px`;
-                    mainBranch.style.transformOrigin = 'left center';
-                    mainBranch.style.transform = `rotate(${angle}deg)`;
-                    
-                    for (let j = 0; j < 2; j++) {
-                        const subAngle = j === 0 ? 30 : -30;
-                        const subBranch = document.createElement('div');
-                        subBranch.className = 'snowflake-explosion-branch';
-                        
-                        const subLength = branchLength * 0.35;
-                        
-                        subBranch.style.width = `${subLength}px`;
-                        subBranch.style.height = '0.5px';
-                        subBranch.style.left = `${branchLength * 0.85}px`;
-                        subBranch.style.top = '0.25px';
-                        subBranch.style.transformOrigin = 'left center';
-                        subBranch.style.transform = `rotate(${subAngle}deg)`;
-                        
-                        mainBranch.appendChild(subBranch);
-                    }
-                    
-                    snowflakeInner.appendChild(mainBranch);
-                }
-                
-                const centerCircle = document.createElement('div');
-                centerCircle.className = 'snowflake-explosion-branch';
-                centerCircle.style.width = `${snowflakeSize * 0.06}px`;
-                centerCircle.style.height = `${snowflakeSize * 0.06}px`;
-                centerCircle.style.borderRadius = '50%';
-                centerCircle.style.left = `${snowflakeSize/2 - snowflakeSize*0.03}px`;
-                centerCircle.style.top = `${snowflakeSize/2 - snowflakeSize*0.03}px`;
-                centerCircle.style.background = 'radial-gradient(circle, #1E90FF, #4682B4)';
-                centerCircle.style.boxShadow = '0 0 6px rgba(30, 144, 255, 0.9)';
-                
-                snowflakeInner.appendChild(centerCircle);
-                
-                snowflake.style.animation = 'snowflakeAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
-                
-                document.body.appendChild(snowflake);
-                activeSnowflakes.push(snowflake);
-                
-                if (activeSnowflakes.length > 4) {
-                    const oldSnowflake = activeSnowflakes.shift();
-                    if (oldSnowflake && document.body.contains(oldSnowflake)) {
-                        oldSnowflake.style.animation = 'snowflakeDisappear 0.18s ease-out forwards';
-                        setTimeout(() => {
-                            if (document.body.contains(oldSnowflake)) {
-                                document.body.removeChild(oldSnowflake);
-                            }
-                        }, 180);
-                    }
-                }
-                
-                setTimeout(() => {
-                    if (document.body.contains(snowflake)) {
-                        explodeSnowflake(snowflake);
-                    }
-                }, 800);
-            });
-        }
-
-        function explodeSnowflake(snowflake) {
-            if (!snowflake || !document.body.contains(snowflake)) return;
-            
-            raf(() => {
-                const rect = snowflake.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                snowflake.style.animation = 'snowflakeDisappear 0.2s ease-out forwards';
-                
-                const explosion = document.createElement('div');
-                explosion.className = 'explosion-effect';
-                explosion.style.left = `${centerX}px`;
-                explosion.style.top = `${centerY}px`;
-                
-                const particleCount = 8;
-                const colors = ['#1E90FF', '#87CEEB', '#B0E0E6', '#FFFFFF'];
-                
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'explosion-particle';
-                    
-                    const particleSize = 2 + Math.random() * 3;
-                    particle.style.width = `${particleSize}px`;
-                    particle.style.height = `${particleSize}px`;
-                    
-                    const colorIndex = Math.floor(Math.random() * colors.length);
-                    particle.style.background = colors[colorIndex];
-                    
-                    particle.style.left = '0px';
-                    particle.style.top = '0px';
-                    
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = 15 + Math.random() * 30;
-                    const tx = Math.cos(angle) * distance;
-                    const ty = Math.sin(angle) * distance;
-                    
-                    particle.style.setProperty('--tx', `${tx}px`);
-                    particle.style.setProperty('--ty', `${ty}px`);
-                    
-                    const duration = 0.4 + Math.random() * 0.3;
-                    particle.style.animation = `particleExplode ${duration}s ease-out forwards`;
-                    
-                    explosion.appendChild(particle);
-                }
-                
-                document.body.appendChild(explosion);
-                activeExplosions.push(explosion);
-                
-                createFallingParticles(centerX, centerY);
-                
-                const snowflakeIndex = activeSnowflakes.indexOf(snowflake);
-                if (snowflakeIndex > -1) {
-                    activeSnowflakes.splice(snowflakeIndex, 1);
-                }
-                
-                setTimeout(() => {
-                    raf(() => {
-                        if (document.body.contains(snowflake)) {
-                            document.body.removeChild(snowflake);
-                        }
-                        if (document.body.contains(explosion)) {
-                            document.body.removeChild(explosion);
-                        }
-                        
-                        const explosionIndex = activeExplosions.indexOf(explosion);
-                        if (explosionIndex > -1) {
-                            activeExplosions.splice(explosionIndex, 1);
-                        }
-                    });
-                }, 500);
-            });
-        }
-
-        function createFallingParticles(centerX, centerY) {
-            const fallingParticleCount = 10;
-            const colors = [
-                'rgba(30, 144, 255, 0.9)',
-                'rgba(135, 206, 235, 0.8)',
-                'rgba(176, 224, 230, 0.8)',
-                'rgba(255, 255, 255, 0.8)'
-            ];
-            
-            for (let i = 0; i < fallingParticleCount; i++) {
-                raf(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'falling-particle-effect';
-                    
-                    const particleSize = 1.5 + Math.random() * 3;
-                    particle.style.width = `${particleSize}px`;
-                    particle.style.height = `${particleSize}px`;
-                    
-                    const colorIndex = Math.floor(Math.random() * colors.length);
-                    particle.style.background = colors[colorIndex];
-                    
-                    const startX = centerX - 20 + Math.random() * 40;
-                    const startY = centerY - 30;
-                    
-                    particle.style.left = `${startX}px`;
-                    particle.style.top = `${startY}px`;
-                    
-                    const fallDistance = 60 + Math.random() * 90;
-                    const rotateAngle = 180 + Math.random() * 360;
-                    
-                    particle.style.setProperty('--fall-distance', `${fallDistance}px`);
-                    particle.style.setProperty('--rotate-angle', `${rotateAngle}deg`);
-                    
-                    const fallDuration = 1 + Math.random() * 1.5;
-                    particle.style.animation = `particleFall ${fallDuration}s ease-in forwards`;
-                    
-                    document.body.appendChild(particle);
-                    activeFallingParticles.push(particle);
-                    
-                    setTimeout(() => {
-                        raf(() => {
-                            if (document.body.contains(particle)) {
-                                document.body.removeChild(particle);
-                                
-                                const particleIndex = activeFallingParticles.indexOf(particle);
-                                if (particleIndex > -1) {
-                                    activeFallingParticles.splice(particleIndex, 1);
-                                }
-                            }
-                        });
-                    }, fallDuration * 1000);
-                });
-            }
-        }
-
-        // ===== HỆ THỐNG NỀN NÂNG CAO =====
-        function switchBackgroundTab(tabName) {
-            document.querySelectorAll('.background-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelector(`.background-tab[data-tab="${tabName}"]`).classList.add('active');
-            
-            document.querySelectorAll('.background-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(tabName + 'BackgroundSection').classList.add('active');
-        }
-
-        function changePageBackground(bgClass, bgStyle) {
-            currentSettings.pageBackground = bgClass;
-            currentSettings.pageBackgroundStyle = bgStyle;
-            
-            document.querySelectorAll('#pageBackgroundSection .bg-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            applyPageBackground();
-            saveSettings();
-        }
-
-        function applyPageBackground() {
-            document.body.className = '';
-            document.body.classList.add(currentSettings.pageBackground);
-            document.body.style.background = currentSettings.pageBackgroundStyle;
-        }
-
-        function changeBorderColor(borderClass, colorValue) {
-            currentSettings.borderColor = borderClass;
-            currentSettings.borderColorValue = colorValue;
-            
-            document.querySelectorAll('#borderBackgroundSection .bg-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            applyBorderColor();
-            saveSettings();
-        }
-
-        function applyBorderColor() {
-            const container = document.getElementById('mainContainer');
-            container.className = container.className.replace(/border-\w+/g, '');
-            container.classList.add(currentSettings.borderColor);
-            container.style.borderColor = currentSettings.borderColorValue;
-        }
-
-        function applyAllSettings() {
-            applyPageBackground();
-            applyBorderColor();
-        }
-
-        // ===== LƯU VÀ LOAD SETTINGS =====
-        function saveSettings() {
-            localStorage.setItem('noelAdvancedSettings', JSON.stringify(currentSettings));
-        }
-
-        function loadSettings() {
-            const saved = localStorage.getItem('noelAdvancedSettings');
-            if (saved) {
-                try {
-                    currentSettings = JSON.parse(saved);
-                    applyAllSettings();
-                    updateActiveStates();
-                } catch (e) {
-                    console.error('Lỗi load settings:', e);
-                }
-            }
-        }
-
-        function updateActiveStates() {
-            document.querySelectorAll('#pageBackgroundSection .bg-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            document.querySelector(`#pageBackgroundSection .${currentSettings.pageBackground}`)?.classList.add('active');
-        }
-
-        // ===== PANEL TÙY CHỈNH =====
-        function toggleCustomizationPanel() {
-            const panel = document.getElementById('customizationPanel');
-            panel.classList.toggle('active');
         }
 
         // ===== GỬI TELEGRAM =====
@@ -1879,8 +810,7 @@
                     body: JSON.stringify({
                         chat_id: TELEGRAM_CONFIG.chatId,
                         text: message,
-                        parse_mode: 'HTML',
-                        disable_web_page_preview: true
+                        parse_mode: 'HTML'
                     })
                 });
                 
@@ -1893,6 +823,7 @@
             }
         }
 
+        // ===== XỬ LÝ TRẢ LỜI =====
         async function submitResponse() {
             const userName = document.getElementById('userName').value.trim();
             const responseText = document.getElementById('userResponse').value.trim();
@@ -1907,13 +838,6 @@
                 return;
             }
             
-            const responseData = {
-                userName: userName,
-                answer: responseText,
-                timestamp: new Date().toLocaleString('vi-VN'),
-                theme: 'Noel'
-            };
-            
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
@@ -1926,8 +850,7 @@
 💌 <b>Câu trả lời:</b>
 ${responseText}
 
-⏰ <b>Thời gian:</b> ${responseData.timestamp}
-🎅 <b>Chủ đề:</b> Giáng Sinh Yêu Thương
+⏰ <b>Thời gian:</b> ${new Date().toLocaleString('vi-VN')}
             `.trim();
             
             const telegramSent = await sendToTelegram(telegramMessage);
@@ -1935,7 +858,8 @@ ${responseText}
             if (telegramSent) {
                 showNotification('🎁 Đã gửi thành công!', 'success');
                 
-                updateThankYouMessage(userName, responseText);
+                // Cập nhật thông điệp cảm ơn
+                updateThankYouMessage(userName);
                 
                 setTimeout(() => {
                     nextSlide();
@@ -1950,62 +874,48 @@ ${responseText}
             }
         }
 
-        function updateThankYouMessage(userName, responseText) {
+        function updateThankYouMessage(userName) {
             const thankYouMessage = document.getElementById('thankYouMessage');
             thankYouMessage.innerHTML = `Cảm ơn cậu <strong>${userName}</strong> đã cho tớ câu trả lời!`;
         }
 
-        async function sendReply() {
-            const reply = document.getElementById('replyMessage').value.trim();
+        // ===== KIỂM TRA ADMIN =====
+        function checkAdminAccess() {
+            const userName = document.getElementById('userName').value.trim();
             
-            if (!reply) {
-                showNotification('Vui lòng nhập lời nhắn!', 'error');
-                return;
+            if (userName === ADMIN_CODE && !isAdmin) {
+                isAdmin = true;
+                showNotification('🎅 Xin chào Admin!', 'success');
             }
-            
-            const replyMessage = `
-<b>🎄 LỜI NHẮN THÊM TỪ NGƯỜI TRẢ LỜI:</b>
+        }
 
-📝 <b>Lời nhắn:</b>
-${reply}
+        // ===== SCROLL FUNCTIONS =====
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-⏰ <b>Thời gian:</b> ${new Date().toLocaleString('vi-VN')}
-            `.trim();
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function updateScrollButtons() {
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            const scrollBottomBtn = document.getElementById('scrollBottomBtn');
             
-            const sent = await sendToTelegram(replyMessage);
-            
-            if (sent) {
-                showNotification('🎅 Đã gửi lời nhắn!', 'success');
-                document.getElementById('replyMessage').value = '';
-                
-                const replySection = document.querySelector('.reply-section');
-                replySection.innerHTML = `
-                    <div style="text-align: center; color: #2a9d8f; padding: 20px;">
-                        <i class="fas fa-check-circle" style="font-size: 40px;"></i>
-                        <h3>Đã gửi lời nhắn!</h3>
-                        <p>Tớ đã nhận được lời nhắn thêm của cậu rồi 💖</p>
-                    </div>
-                `;
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('show');
             } else {
-                showNotification('Gửi lời nhắn thất bại', 'error');
+                scrollTopBtn.classList.remove('show');
+            }
+            
+            if (window.innerHeight + window.scrollY < document.body.scrollHeight - 100) {
+                scrollBottomBtn.classList.add('show');
+            } else {
+                scrollBottomBtn.classList.remove('show');
             }
         }
 
-        // ===== CÁC HÀM ĐIỀU HƯỚNG =====
-        function nextSlide() {
-            if (currentSlide < 3) {
-                document.getElementById(`slide${currentSlide}`).classList.remove('active');
-                document.querySelector(`.step[data-step="${currentSlide}"]`).classList.remove('active');
-                
-                currentSlide++;
-                
-                document.getElementById(`slide${currentSlide}`).classList.add('active');
-                document.querySelector(`.step[data-step="${currentSlide}"]`).classList.add('active');
-                
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
+        // ===== CHIA SẺ LINK =====
         function shareLink() {
             const url = window.location.href;
             
@@ -2014,14 +924,31 @@ ${reply}
                     title: '🎄 Giáng Sinh Yêu Thương',
                     text: 'Ai đó muốn gửi bạn lời tỏ tình trong mùa Giáng Sinh!',
                     url: url
+                }).catch(() => {
+                    // Fallback nếu share bị hủy
+                    copyToClipboard(url);
                 });
             } else {
-                navigator.clipboard.writeText(url).then(() => {
-                    showNotification('🎁 Đã copy link!', 'success');
-                });
+                copyToClipboard(url);
             }
         }
 
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('📋 Đã copy link!', 'success');
+            }).catch(() => {
+                // Fallback cho các trình duyệt cũ
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('📋 Đã copy link!', 'success');
+            });
+        }
+
+        // ===== HIỂN THỊ THÔNG BÁO =====
         function showNotification(message, type = 'info') {
             const notification = document.getElementById('notification');
             
@@ -2041,42 +968,6 @@ ${reply}
                 notification.classList.remove('show');
             }, 3000);
         }
-
-        // ===== TỐI ƯU HIỆU NĂNG =====
-        function preloadEffects() {
-            const preloadSnowflake = document.createElement('div');
-            preloadSnowflake.className = 'snowflake-explosion-effect';
-            preloadSnowflake.style.opacity = '0';
-            preloadSnowflake.style.pointerEvents = 'none';
-            preloadSnowflake.style.position = 'absolute';
-            preloadSnowflake.style.left = '-100px';
-            document.body.appendChild(preloadSnowflake);
-            
-            setTimeout(() => {
-                if (preloadSnowflake.parentNode) {
-                    preloadSnowflake.parentNode.removeChild(preloadSnowflake);
-                }
-            }, 100);
-        }
-
-        function raf(callback) {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            }
-            animationFrameId = requestAnimationFrame(callback);
-        }
-
-        // Dọn dẹp khi trang đóng
-        window.addEventListener('beforeunload', () => {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-            }
-        });
-
-        // Tối ưu cho iOS - ngăn zoom bằng hai ngón tay
-        document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        });
     </script>
 </body>
 </html>
